@@ -2,7 +2,7 @@ import pygame
 from modules.grass_spawner import*
 
 class Ground:
-	def __init__(self):
+	def __init__(self): # Ground at whic grass spawns on.
 		self.display_surface = pygame.display.get_surface()
 		w, h = self.display_surface.get_size()
 		self.margin = 20

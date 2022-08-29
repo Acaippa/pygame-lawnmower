@@ -18,7 +18,7 @@ class GrassSpawner:
 
 		self.ground = ground
 
-		self.grass_rate = 1
+		self.grass_rate = 1 # The rate at which the grass_index increases.
 
 		self.grass_per_frame = 50
 
@@ -43,10 +43,12 @@ class GrassSpawner:
 		for grass in self.grass_list:
 			grass.update(self.delta_time)
 
-	def spawn_grass(self):
+	def spawn_grass(self): # Get random coordinates inside ground and spawn grass.
 		if self.grass_index >= self.grass_time and len(self.grass_list) < MAX_GRASS_AMOUNT:
 			for i in range(self.grass_per_frame):
+				# Width and height of ground.
 				w, h = self.ground.get_size()
+				# The start of X and Y of the ground.
 				x, y = self.ground.get_pos()
 				grass_x, grass_y = randint(x, x+w), randint(y, y+h)
 				self.grass_list.append(Grass((grass_x, grass_y), self))
@@ -54,7 +56,7 @@ class GrassSpawner:
 		else:
 			self.grass_index += self.grass_rate * self.delta_time
 
-	def cut_grass(self):
+	def cut_grass(self): # Check if the certain close grass is colliding with the mower.
 		for grass in self.grass_list:
 			if sqrt((self.mower.pos[0] - grass.pos[0])**2 + (self.mower.pos[1] - grass.pos[1])**2) < 30:
 				offset_x = grass.rect[0] - self.mower.rotated_cutting_surface_rect[0]

@@ -14,7 +14,7 @@ class Game:
 	def update(self, dt):
 		self.delta_time = dt
 
-		self.level_list[self.level_state].update(self.delta_time)
+		self.level_list[self.level_state].update(self.delta_time) # Update right level state.
 
 	def draw(self):
 		pass

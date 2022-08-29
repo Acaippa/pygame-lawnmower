@@ -3,13 +3,13 @@ import math
 from settings import*
 
 class Mower(pygame.sprite.Sprite):
-	def __init__(self, image, pos):
+	def __init__(self, image, pos): # Abstract mower class.
 		pygame.sprite.Sprite.__init__(self)
 		self.display_surface = pygame.display.get_surface()
 
 		self.image = pygame.image.load(image).convert_alpha()
 		w, h = self.image.get_size()
-		self.image = pygame.transform.scale(self.image, (w * MOWER_SIZE, h * MOWER_SIZE))
+		self.image = pygame.transform.scale(self.image, (w * MOWER_SIZE, h * MOWER_SIZE)) # Multiply the size of the mower according to settings.py.
 
 		self.pos = pos
 
@@ -48,6 +48,8 @@ class Mower(pygame.sprite.Sprite):
 
 		radians = math.radians(self.angle)
 
+		# Move the mower in self.angle or turn by increasing or decreasing self.angle.
+
 		if keys[pygame.K_UP]:
 			self.pos = self.pos[0] - (math.sin(radians) * self.speed) * self.delta_time, self.pos[1] - (math.cos(radians) * self.speed) * self.delta_time
 
@@ -60,7 +62,7 @@ class Mower(pygame.sprite.Sprite):
 		if keys[pygame.K_LEFT]:
 			self.angle += self.turn_rate * self.delta_time
 
-	def rotate(self):
+	def rotate(self): # Rotate both the mower Surface and the cutting Surface and update their rects and masks.
 		self.rotated_image = pygame.transform.rotate(self.image, self.angle)
 		self.rect = self.rotated_image.get_rect(center=self.pos)
 

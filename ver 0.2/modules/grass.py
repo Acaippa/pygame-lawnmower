@@ -12,7 +12,7 @@ class Grass(pygame.sprite.Sprite):
 
 		self.color = self.get_color()
 
-		self.image.fill(self.get_color())
+		self.image.fill(self.get_color()) # Make the grass a random color from the self.color_list.
 
 		self.delta_time = 0
 
@@ -40,7 +40,7 @@ class Grass(pygame.sprite.Sprite):
 	def draw(self):
 		self.display_surface.blit(self.image, (self.pos[0] - self.image.get_width() // 2, self.pos[1] - self.image.get_height() // 2))
 
-	def grow(self):
+	def grow(self): # Make the grass bigger and update mask.
 		if self.size < GRASS_SIZE:
 			self.size += GROW_RATE * self.delta_time
 			self.mask = pygame.mask.from_surface(self.image)
@@ -49,7 +49,7 @@ class Grass(pygame.sprite.Sprite):
 
 		self.update_surf()
 
-	def update_surf(self):
+	def update_surf(self): # Update surface size and mask
 		self.image = pygame.Surface((self.size, self.size))
 		self.image.fill(self.color)
 		self.rect = self.image.get_rect(center = self.pos)

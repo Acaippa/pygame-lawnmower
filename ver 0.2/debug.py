@@ -1,6 +1,6 @@
 import pygame
 
-class showfps:
+class showfps: # Render the FPS on the screen.
 	def __init__(self, fps):
 		self.display_surface = pygame.display.get_surface()
 		pygame.font.init()
