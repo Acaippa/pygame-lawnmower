@@ -2,6 +2,7 @@ import pygame
 import math
 from settings import*
 from random import*
+from modules.particles import*
 
 class Mower(pygame.sprite.Sprite):
 	def __init__(self, image, pos): # Abstract mower class.
@@ -34,10 +35,16 @@ class Mower(pygame.sprite.Sprite):
 
 		self.on_bool = True
 
+		self.particles_spawner = ParticleSpawner()
+
 	def update(self, dt):
 		self.delta_time = dt
 		
 		self.process_input()
+
+		self.particles_spawner.spawn_particles(pos = self.pos)
+
+		self.particles_spawner.update(self.delta_time)
 
 		self.rotate()
 
