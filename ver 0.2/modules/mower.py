@@ -1,6 +1,7 @@
 import pygame
 import math
 from settings import*
+from random import*
 
 class Mower(pygame.sprite.Sprite):
 	def __init__(self, image, pos): # Abstract mower class.
@@ -19,7 +20,7 @@ class Mower(pygame.sprite.Sprite):
 
 		self.angle = 0
 
-		self.speed = 40
+		self.speed = 50
 
 		self.turn_rate = 100
 
@@ -31,6 +32,8 @@ class Mower(pygame.sprite.Sprite):
 
 		self.cutting_mask = pygame.mask.from_surface(self.rotated_cutting_surface)
 
+		self.on_bool = True
+
 	def update(self, dt):
 		self.delta_time = dt
 		
@@ -41,7 +44,10 @@ class Mower(pygame.sprite.Sprite):
 		self.draw()
 
 	def draw(self):
-		self.display_surface.blit(self.rotated_image, self.rect)
+		if self.on_bool: # Make the mower shake slightly when on
+			self.display_surface.blit(self.rotated_image, (self.rect[0] + uniform(-1, 1) * self.delta_time, self.rect[1] + uniform(-1, 1) * self.delta_time))
+		else:
+			self.display_surface.blit(self.rotated_image, self.rect)
 
 	def process_input(self):
 		keys = pygame.key.get_pressed()
