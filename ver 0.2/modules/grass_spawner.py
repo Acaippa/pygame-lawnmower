@@ -1,6 +1,8 @@
 import pygame
-import random
+from random import*
 from modules.grass import*
+from math import*
+from threading import*
 
 class GrassSpawner:
 	def __init__(self, ground):
@@ -10,18 +12,27 @@ class GrassSpawner:
 
 		self.delta_time = 0
 
-		self.grass_time = 0.5
+		self.grass_time = 0.01
 
 		self.grass_index = 0
 
 		self.ground = ground
 
-	def update(self, dt):
+		self.grass_rate = 1
+
+		self.grass_per_frame = 50
+
+		self.mower = None
+
+	def update(self, dt, mower):
 		self.delta_time = dt
+		self.mower = mower
+
+		self.spawn_grass()
 
 		self.update_grass()
 
-		self.spawn_grass()
+		self.cut_grass()
 
 		self.draw()
 
@@ -32,8 +43,24 @@ class GrassSpawner:
 		for grass in self.grass_list:
 			grass.update(self.delta_time)
 
-
 	def spawn_grass(self):
-		w, h = self.ground.get_size()
-		if self.grass_index >= self.grass_time:
-			self.grass_list.append(grass())
+		if self.grass_index >= self.grass_time and len(self.grass_list) < MAX_GRASS_AMOUNT:
+			for i in range(self.grass_per_frame):
+				w, h = self.ground.get_size()
+				x, y = self.ground.get_pos()
+				grass_x, grass_y = randint(x, x+w), randint(y, y+h)
+				self.grass_list.append(Grass((grass_x, grass_y), self))
+			self.grass_index = 0
+		else:
+			self.grass_index += self.grass_rate * self.delta_time
+
+	def cut_grass(self):
+		for grass in self.grass_list:
+			if sqrt((self.mower.pos[0] - grass.pos[0])**2 + (self.mower.pos[1] - grass.pos[1])**2) < 30:
+				offset_x = grass.rect[0] - self.mower.rotated_cutting_surface_rect[0]
+				offset_y = grass.rect[1] - self.mower.rotated_cutting_surface_rect[1]
+				if self.mower.rotated_cutting_mask.overlap(grass.mask, (offset_x, offset_y)) != None:
+					grass.on_collision()
+
+	def get_grass(self):
+		return self.grass_list

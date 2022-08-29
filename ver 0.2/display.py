@@ -27,6 +27,6 @@ class Display:
 
 			self.game.update(self.delta_time)
 
-			self.delta_time = self.clock.tick(60)
+			self.delta_time = self.clock.tick(60) / 1000
 			showfps(self.clock.get_fps()) # Debug
 			pygame.display.flip()

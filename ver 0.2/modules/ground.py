@@ -14,20 +14,28 @@ class Ground:
 		self.image = pygame.Surface(self.size)
 		self.image.fill("#452203")
 
+		self.mower = None
+
 		self.delta_time = 0
 
 		self.grass_spawner = GrassSpawner(self)
 
-	def update(self, dt):
+	def update(self, dt, mower):
 		self.delta_time = dt
-
-		self.grass_spawner.update(self.delta_time)
+		self.mower = mower
 
 		self.draw()
+
+		self.grass_spawner.update(self.delta_time, self.mower)
 
 	def draw(self):
 		self.display_surface.blit(self.image, self.pos)
 
-
 	def get_size(self):
-		return
+		return self.size
+
+	def get_pos(self):
+		return self.pos
+
+	def get_grass(self):
+		return self.grass_spawner.get_grass()

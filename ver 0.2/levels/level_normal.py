@@ -1,5 +1,6 @@
 import pygame
 from modules.ground import*
+from modules.mower import*
 
 class LvlNormal:
 	def __init__(self):
@@ -9,10 +10,14 @@ class LvlNormal:
 
 		self.ground = Ground()
 
+		self.test_mower = Mower01()
+
 	def update(self, dt):
 		self.delta_time = dt
-		
-		self.ground.update(self.delta_time)
+
+		self.ground.update(self.delta_time, self.test_mower)
+
+		self.test_mower.update(self.delta_time)
 		
 		self.draw()
 
