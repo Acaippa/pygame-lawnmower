@@ -64,10 +64,8 @@ class ParticleSpawner:
 		size = kwargs.get("size", 10)
 		color = kwargs.get("color", "#ff0000")
 		image = kwargs.get("image", None)
-		particles_per_frame = kwargs.get("ppf", 1)
 
-		for i in range(particles_per_frame):
-			self.particle_list.append(Particle(self, position, angle, time_to_live, velocity, size, color, image))
+		self.particle_list.append(Particle(self, position, angle, time_to_live, velocity, size, color, image))
 
 	def update_particles(self):
 		for particle in self.particle_list:
