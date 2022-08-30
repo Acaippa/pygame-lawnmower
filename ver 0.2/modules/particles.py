@@ -3,7 +3,7 @@ from random import*
 from math import*
 
 class Particle: # Particle moving in a certain direction at a certain speed for a certain time.
-	def __init__(self, pos, angle, ttl, velocity, size, color, image = None):
+	def __init__(self, parent, pos, angle, ttl, velocity, size, color, image = None):
 		self.display_surface = pygame.display.get_surface()
 		if image != None:
 			self.image = image
@@ -24,15 +24,20 @@ class Particle: # Particle moving in a certain direction at a certain speed for 
 
 		self.delta_time = 0
 
+		self.parent = parent
+
 	def update(self, dt):
 		self.delta_time = dt
 
-		self.pos = self.pos[0] - (self.velocity * cos(self.angle)) * self.delta_time, self.pos[1] - (self.velocity * sin(self.angle)) * self.delta_time
+		self.pos = self.pos[0] - (self.velocity * sin(self.angle)) * self.delta_time, self.pos[1] - (self.velocity * cos(self.angle)) * self.delta_time
 
 		self.draw()
 
 	def draw(self):
 		self.display_surface.blit(self.image, self.pos)
+
+	def remove_self(self):
+		self.parent.particle_list.remove(self)
 
 class ParticleSpawner:
 	def __init__(self): # Spawns particles.
@@ -56,12 +61,18 @@ class ParticleSpawner:
 		angle = kwargs.get("angle", 0)
 		time_to_live = kwargs.get("ttl", 3)
 		velocity = kwargs.get("velocity", 10)
-		size = kwargs.get("size", 20)
+		size = kwargs.get("size", 10)
 		color = kwargs.get("color", "#ff0000")
 		image = kwargs.get("image", None)
+		particles_per_frame = kwargs.get("ppf", 1)
 
-		self.particle_list.append(Particle(position, angle, time_to_live, velocity, size, color, image))
+		for i in range(particles_per_frame):
+			self.particle_list.append(Particle(self, position, angle, time_to_live, velocity, size, color, image))
 
 	def update_particles(self):
 		for particle in self.particle_list:
-			particle.update(self.delta_time)
+			if particle.time_alive < particle.time_to_live:
+				particle.update(self.delta_time)
+				particle.time_alive += 1 * self.delta_time
+			else:
+				particle.remove_self()

@@ -12,7 +12,7 @@ class Ground:
 		self.size = (w-self.margin*2, h-self.margin*2)
 
 		self.image = pygame.Surface(self.size)
-		self.image.fill("#452203")
+		self.image.fill("#261808")
 
 		self.mower = None
 

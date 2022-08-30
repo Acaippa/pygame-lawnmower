@@ -8,7 +8,7 @@ class Grass(pygame.sprite.Sprite):
 		self.display_surface = pygame.display.get_surface()
 		self.image = pygame.Surface((0, 0))
 
-		self.color_list = ["#088a2b", "#087324", "#065c1d"]
+		self.color_list = GRASS_COLORS
 
 		self.color = self.get_color()
 

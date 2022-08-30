@@ -63,6 +63,7 @@ class GrassSpawner:
 				offset_y = grass.rect[1] - self.mower.rotated_cutting_surface_rect[1]
 				if self.mower.rotated_cutting_mask.overlap(grass.mask, (offset_x, offset_y)) != None:
 					grass.on_collision()
+					self.mower.on_collision()
 
 	def get_grass(self):
 		return self.grass_list

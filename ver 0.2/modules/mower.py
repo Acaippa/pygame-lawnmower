@@ -35,18 +35,16 @@ class Mower(pygame.sprite.Sprite):
 
 		self.on_bool = True
 
-		self.particles_spawner = ParticleSpawner()
+		self.grass_particles = ParticleSpawner()
 
 	def update(self, dt):
 		self.delta_time = dt
 		
 		self.process_input()
 
-		self.particles_spawner.spawn_particles(pos = self.pos)
-
-		self.particles_spawner.update(self.delta_time)
-
 		self.rotate()
+
+		self.grass_particles.update(self.delta_time)
 
 		self.draw()
 
@@ -82,6 +80,10 @@ class Mower(pygame.sprite.Sprite):
 		self.rotated_cutting_surface = pygame.transform.rotate(self.cutting_surface, self.angle)
 		self.rotated_cutting_surface_rect = self.rotated_cutting_surface.get_rect(center = self.pos)
 		self.rotated_cutting_mask = pygame.mask.from_surface(self.rotated_cutting_surface)
+
+	def on_collision(self):
+		self.grass_particles.spawn_particles(pos=self.pos, angle=radians(self.angle+100+randint(-10, 10)), velocity=500, ttl=uniform(0.1, 0.2), color=choice(GRASS_COLORS_PARTICLES), size=5, ppf=20)
+
 
 
 class Mower01(Mower):
