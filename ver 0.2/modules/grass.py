@@ -28,17 +28,20 @@ class Grass(pygame.sprite.Sprite):
 
 		self.rect = self.image.get_rect(center = self.pos)
 
+		self.blit_pos = (self.pos[0] - self.image.get_width() // 2, self.pos[1] - self.image.get_height() // 2)
+
 	def update(self, dt):
 		self.delta_time = dt
 		
 		# Only run when growing to save on resources.
 		if self.grow_bool:
+			self.blit_pos = (self.pos[0] - self.image.get_width() // 2, self.pos[1] - self.image.get_height() // 2)
 			self.grow()
 
 		self.draw()
 
 	def draw(self):
-		self.display_surface.blit(self.image, (self.pos[0] - self.image.get_width() // 2, self.pos[1] - self.image.get_height() // 2))
+		self.display_surface.blit(self.image, self.blit_pos)
 
 	def grow(self): # Make the grass bigger and update mask.
 		if self.size < GRASS_SIZE:
