@@ -2,14 +2,14 @@ import pygame
 from modules.grass_spawner import*
 
 class Ground:
-	def __init__(self): # Ground at whic grass spawns on.
+	def __init__(self): # Ground at which grass spawns on.
 		self.display_surface = pygame.display.get_surface()
 		w, h = self.display_surface.get_size()
 		self.margin = 20
 
-		self.pos = (self.margin, self.margin)
+		self.pos = (self.margin, self.margin * 3)
 
-		self.size = (w-self.margin*2, h-self.margin*2)
+		self.size = (w-self.margin*2, h-self.margin*4)
 
 		self.image = pygame.Surface(self.size)
 		self.image.fill("#261808")
