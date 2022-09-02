@@ -16,7 +16,7 @@ class LvlNormal:
 
 		self.player_info = PlayerInfo(self.test_mower)
 
-		self.composter = Composter()
+		self.composter = Composter(self.test_mower)
 
 	def update(self, dt):
 		self.delta_time = dt
