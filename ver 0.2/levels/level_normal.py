@@ -2,6 +2,7 @@ import pygame
 from modules.ground import*
 from modules.mower import*
 from UI.player_info import*
+from modules.composter import*
 
 class LvlNormal:
 	def __init__(self):
@@ -15,12 +16,16 @@ class LvlNormal:
 
 		self.player_info = PlayerInfo(self.test_mower)
 
+		self.composter = Composter()
+
 	def update(self, dt):
 		self.delta_time = dt
 
 		self.ground.update(self.delta_time, self.test_mower)
 
 		self.test_mower.update(self.delta_time)
+
+		self.composter.update(self.delta_time)
 
 		self.player_info.update(self.delta_time)
 		

@@ -25,6 +25,7 @@ class PlayerInfo:
 		self.surface.fill(self.background_color)
 
 		self.write(f"$ {self.mower.get_grass_cut()}", pos=("center", 0), size=30)
+		self.write(f"{self.mower.bag.capacity_index}", pos=("center", 30), size=30)
 
 		self.draw()
 
