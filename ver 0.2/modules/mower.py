@@ -6,13 +6,15 @@ from modules.particles import*
 
 
 class Mower(pygame.sprite.Sprite):
-	def __init__(self, image, pos, **kwargs): # Abstract mower class.
+	def __init__(self, image, pos, level, **kwargs): # Abstract mower class.
 		pygame.sprite.Sprite.__init__(self)
 		self.display_surface = pygame.display.get_surface()
 
 		self.image = pygame.image.load(image).convert_alpha()
 		w, h = self.image.get_size()
 		self.image = pygame.transform.scale(self.image, (w * MOWER_SIZE, h * MOWER_SIZE)) # Multiply the size of the mower according to settings.py.
+		
+		self.level = level
 
 		self.pos = pos
 
@@ -49,6 +51,7 @@ class Mower(pygame.sprite.Sprite):
 		if bag_image != None:
 			self.bag = Bag(self, bag_image[0], bag_image[1])
 
+
 	def update(self, dt):
 		self.delta_time = dt
 		
@@ -77,16 +80,16 @@ class Mower(pygame.sprite.Sprite):
 
 		# Move the mower in self.angle or turn by increasing or decreasing self.angle.
 
-		if keys[pygame.K_UP]:
+		if keys[pygame.K_UP] and self.check_if_in_bounds():
 			self.pos = self.pos[0] - (math.sin(radians) * self.speed) * self.delta_time, self.pos[1] - (math.cos(radians) * self.speed) * self.delta_time
 
-		if keys[pygame.K_DOWN]:
+		if keys[pygame.K_DOWN] and self.check_if_in_bounds():
 			self.pos = self.pos[0] + (math.sin(radians) * self.speed) * self.delta_time, self.pos[1] + (math.cos(radians) * self.speed) * self.delta_time
 
-		if keys[pygame.K_RIGHT]:
+		if keys[pygame.K_RIGHT] and self.check_if_in_bounds():
 			self.angle -= self.turn_rate * self.delta_time
 
-		if keys[pygame.K_LEFT]:
+		if keys[pygame.K_LEFT] and self.check_if_in_bounds():
 			self.angle += self.turn_rate * self.delta_time
 
 	def rotate(self): # Rotate both the mower Surface and the cutting Surface and update their rects and masks.
@@ -110,6 +113,15 @@ class Mower(pygame.sprite.Sprite):
 	def get_grass_cut(self):
 		return self.grass_cut
 
+	def increase_money(self, grass):
+		self.level.money += grass * GRASS_PRIZE
+
+	def check_if_in_bounds(self):
+		if self.rect.centerx < self.display_surface.get_width() and self.rect.centery < self.display_surface.get_height():
+			if self.rect.center[0] > 0 and self.rect.center[0] > 0:
+				return True
+		return False
+
 
 class Bag:
 	def __init__(self, mower, image, drag_image):
@@ -124,7 +136,6 @@ class Bag:
 		self.image = pygame.image.load(image)
 		w, h = self.image.get_size()
 
-
 		self.image = pygame.transform.scale(self.image, (w * MOWER_SIZE, h * MOWER_SIZE))
 		self.image = pygame.transform.rotate(self.image, self.mower.angle)
 		self.rect = self.image.get_rect()
@@ -138,8 +149,10 @@ class Bag:
 
 		self.attached_to_mower = True
 
-		self.capacity = 100
+		self.capacity = 1000
 		self.capacity_index = 0 # The grass in the bag.
+
+		self.level = self.mower.level
 
 	def update(self, dt):
 		self.delta_time = dt
@@ -162,11 +175,13 @@ class Bag:
 		if self.attached_to_mower:
 			self.image_rotated = pygame.transform.rotate(self.image, self.mower.angle)
 			self.rect = self.image.get_rect(center=self.mower.rect.center)
+			self.drag_rect = self.drag_image.get_rect()
 			self.mask = pygame.mask.from_surface(self.image_rotated)
 			self.pos = (self.mower.rect[0] + self.mower.shaking_offset[0], self.mower.rect[1] + self.mower.shaking_offset[1])
 
 		if self.attached_to_mower == False:
 			mouse_pos = pygame.mouse.get_pos()
+			self.drag_rect = self.drag_image_rotated.get_rect(center=self.pos)
 			self.pos = mouse_pos[0] - self.drag_image_rotated.get_width() // 2, mouse_pos[1] - self.drag_image_rotated.get_height() // 2
 
 	def check_if_dragging(self):
@@ -176,7 +191,12 @@ class Bag:
 		if mouse_clicked[0] == False:
 			# Update the position to be the mower when the user lets go of the bag to prevent the bag from flashing when letting go.
 			self.pos = (self.mower.rect[0] + self.mower.shaking_offset[0], self.mower.rect[1] + self.mower.shaking_offset[1])
+			# Check if the bag_rect is overlapping the composter when its being let go.
+			if self.level.composter.rect.colliderect(self.drag_rect):
+				self.mower.increase_money(self.capacity_index)
+				self.capacity_index = 0
 			self.attached_to_mower = True
+
 
 		try:
 			if self.mask.get_at((mouse_pos[0] - self.mower.rect[0], mouse_pos[1] - self.mower.rect[1])) != 0 and mouse_clicked[0]:
@@ -186,5 +206,5 @@ class Bag:
 
 
 class Mower01(Mower):
-	def __init__(self):
-		super().__init__("images/lawn_mower01.png", (0,0), bag=("images/mower_bag01.png", "images/mower_bag01drag.png"))
+	def __init__(self, level):
+		super().__init__("images/lawn_mower01.png", (10,3), level, bag=("images/mower_bag01.png", "images/mower_bag01drag.png"))

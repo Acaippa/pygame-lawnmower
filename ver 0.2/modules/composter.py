@@ -16,6 +16,8 @@ class Composter:
 
 		self.mower = mower
 
+		self.rect = self.image.get_rect(center = self.pos)
+
 	def update(self, dt):
 		self.delta_time = dt
 
@@ -27,6 +29,7 @@ class Composter:
 		self.draw()
 
 	def draw(self):
+		self.rect = self.image.get_rect(center = self.pos)
 		self.display_surface.blit(self.image, self.pos)
 
 	def show_self(self):

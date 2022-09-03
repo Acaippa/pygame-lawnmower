@@ -12,11 +12,13 @@ class LvlNormal:
 
 		self.ground = Ground()
 
-		self.test_mower = Mower01()
+		self.test_mower = Mower01(self)
 
-		self.player_info = PlayerInfo(self.test_mower)
+		self.player_info = PlayerInfo(self)
 
 		self.composter = Composter(self.test_mower)
+
+		self.money = 0
 
 	def update(self, dt):
 		self.delta_time = dt

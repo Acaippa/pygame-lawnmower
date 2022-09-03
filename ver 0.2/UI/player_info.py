@@ -1,12 +1,14 @@
 import pygame
 
 class PlayerInfo:
-	def __init__(self, mower):
+	def __init__(self, level):
 		self.display_surface = pygame.display.get_surface()
 		pygame.font.init()
 		self.margin = 50
 
-		self.mower = mower
+		self.level = level
+
+		self.mower = level.test_mower
 
 		self.pos = self.margin, 0
 
@@ -24,7 +26,7 @@ class PlayerInfo:
 
 		self.surface.fill(self.background_color)
 
-		self.write(f"$ {self.mower.get_grass_cut()}", pos=("center", 0), size=30)
+		self.write(f"$ {self.level.money}", pos=("center", 0), size=30)
 		self.write(f"{self.mower.bag.capacity_index}", pos=("center", 30), size=30)
 
 		self.draw()
