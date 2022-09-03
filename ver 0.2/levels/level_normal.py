@@ -23,9 +23,9 @@ class LvlNormal:
 
 		self.ground.update(self.delta_time, self.test_mower)
 
-		self.test_mower.update(self.delta_time)
-
 		self.composter.update(self.delta_time)
+
+		self.test_mower.update(self.delta_time)
 
 		self.player_info.update(self.delta_time)
 		

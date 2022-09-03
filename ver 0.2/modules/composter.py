@@ -12,15 +12,17 @@ class Composter:
 
 		self.pos = (0, self.display_surface.get_height())
 
-		self.velocity = 1
+		self.velocity = 100
 
 		self.mower = mower
 
 	def update(self, dt):
 		self.delta_time = dt
 
-		if self.mower.bag.attached_to_mower:
+		if not self.mower.bag.attached_to_mower:
 			self.show_self()
+		else:
+			self.hide_self()
 
 		self.draw()
 
@@ -28,5 +30,9 @@ class Composter:
 		self.display_surface.blit(self.image, self.pos)
 
 	def show_self(self):
-		if self.pos[1] > 0:
-			self.pos = self.pos[0], self.pos[1] - self.velocity
+		if self.pos[1] > self.display_surface.get_height() - self.image.get_height():
+			self.pos = self.pos[0], self.pos[1] - self.velocity * self.delta_time
+
+	def hide_self(self):
+		if self.pos[1] < self.display_surface.get_height():
+			self.pos = self.pos[0], self.pos[1] + self.velocity * self.delta_time
