@@ -80,16 +80,16 @@ class Mower(pygame.sprite.Sprite):
 
 		# Move the mower in self.angle or turn by increasing or decreasing self.angle.
 
-		if keys[pygame.K_UP] and self.check_if_in_bounds():
+		if keys[pygame.K_UP]:
 			self.pos = self.pos[0] - (math.sin(radians) * self.speed) * self.delta_time, self.pos[1] - (math.cos(radians) * self.speed) * self.delta_time
 
-		if keys[pygame.K_DOWN] and self.check_if_in_bounds():
+		if keys[pygame.K_DOWN]:
 			self.pos = self.pos[0] + (math.sin(radians) * self.speed) * self.delta_time, self.pos[1] + (math.cos(radians) * self.speed) * self.delta_time
 
-		if keys[pygame.K_RIGHT] and self.check_if_in_bounds():
+		if keys[pygame.K_RIGHT]:
 			self.angle -= self.turn_rate * self.delta_time
 
-		if keys[pygame.K_LEFT] and self.check_if_in_bounds():
+		if keys[pygame.K_LEFT]:
 			self.angle += self.turn_rate * self.delta_time
 
 	def rotate(self): # Rotate both the mower Surface and the cutting Surface and update their rects and masks.
@@ -115,12 +115,6 @@ class Mower(pygame.sprite.Sprite):
 
 	def increase_money(self, grass):
 		self.level.money += grass * GRASS_PRIZE
-
-	def check_if_in_bounds(self):
-		if self.rect.centerx < self.display_surface.get_width() and self.rect.centery < self.display_surface.get_height():
-			if self.rect.center[0] > 0 and self.rect.center[0] > 0:
-				return True
-		return False
 
 
 class Bag:

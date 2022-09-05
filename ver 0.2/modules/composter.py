@@ -10,7 +10,8 @@ class Composter:
 		
 		self.delta_time = 0
 
-		self.pos = (0, self.display_surface.get_height())
+		w, h = self.display_surface.get_size()
+		self.pos = (w / 2, h)
 
 		self.velocity = 100
 
@@ -30,7 +31,7 @@ class Composter:
 
 	def draw(self):
 		self.rect = self.image.get_rect(center = self.pos)
-		self.display_surface.blit(self.image, self.pos)
+		self.display_surface.blit(self.image, (self.pos[0] - self.image.get_width() / 2, self.pos[1]))
 
 	def show_self(self):
 		if self.pos[1] > self.display_surface.get_height() - self.image.get_height():
