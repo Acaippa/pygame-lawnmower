@@ -17,17 +17,23 @@ class MowerMenu:
 
 		self.width = 200
 
-		self.pos = (0, self.margin)
+		self.pos = (-self.width, self.margin)
 
 		w, h = self.display_surface.get_size()
 		self.surface = pygame.Surface((self.width, h - self.margin * 2))
 
+		self.background_color = "#7f2424"
+
+		self.surface.fill(self.background_color)
+
 		self.velocity = 500
 
-		self.hide_self_bool = False
-		self.show_self_bool = True
+		self.hide_self_bool = True
+		self.show_self_bool = False
 
 		self.hidden = True
+
+		self.item_list = [] # all the items inside the menu.
 
 	def update(self, dt):
 		self.delta_time = dt
