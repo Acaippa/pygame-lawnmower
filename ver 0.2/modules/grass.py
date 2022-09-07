@@ -44,21 +44,17 @@ class Grass(pygame.sprite.Sprite):
 		self.display_surface.blit(self.image, self.blit_pos)
 
 	def grow(self): # Make the grass bigger and update mask.
-		if self.size < GRASS_SIZE:
+		if self.size + GROW_RATE * self.delta_time < GRASS_SIZE:
 			self.size += GROW_RATE * self.delta_time
 			self.mask = pygame.mask.from_surface(self.image)
+			self.image = pygame.Surface((self.size, self.size))
+			self.image.fill(self.color)
+			self.rect = self.image.get_rect(center = self.pos)
 		else:
-			self.grow_bool = False
-
-		self.update_surf()
-
-	def update_surf(self): # Update surface size and mask
-		self.image = pygame.Surface((self.size, self.size))
-		self.image.fill(self.color)
-		self.rect = self.image.get_rect(center = self.pos)
+			self.grow_bool = False		
 
 	def get_color(self):
 		return choice(self.color_list)
 
-	def on_collision(self):
-		self.spawner.grass_list.remove(self)
+	def on_collision(self, parent):
+		parent.grass_list.remove(self)

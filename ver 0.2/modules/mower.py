@@ -196,7 +196,7 @@ class Bag:
 			if self.mask.get_at((mouse_pos[0] - self.mower.rect[0], mouse_pos[1] - self.mower.rect[1])) != 0 and mouse_clicked[0]:
 				self.attached_to_mower = False
 		except Exception as e:
-			print(e)
+			pass
 
 
 class Mower01(Mower):

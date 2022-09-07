@@ -14,6 +14,8 @@ class Ground:
 		self.image = pygame.Surface(self.size)
 		self.image.fill("#261808")
 
+		self.rect = self.image.get_rect()
+
 		self.mower = None
 
 		self.delta_time = 0
