@@ -51,10 +51,52 @@ class Grass(pygame.sprite.Sprite):
 			self.image.fill(self.color)
 			self.rect = self.image.get_rect(center = self.pos)
 		else:
-			self.grow_bool = False		
+			self.grow_bool = False
 
 	def get_color(self):
 		return choice(self.color_list)
+
+	def on_collision(self, parent):
+		parent.grass_list.remove(self)
+
+class GrassStraw:
+	def __init__(self, pos, spawner):
+		self.display_surface = pygame.display.get_surface()
+
+		self.pos = pos
+
+		self.spawner = spawner
+
+		self.delta_time = 0
+
+		self.height = 0
+
+		self.bend = uniform(-1, 1)
+
+		self.mask = None
+
+		self.second_point = (self.pos[0] + self.bend, self.pos[1] - self.height)
+
+		self.growing = True
+
+	def update(self, dt):
+		self.delta_time = dt
+
+		if self.growing:
+			if self.height + GROW_RATE * self.delta_time < GRASS_SIZE:
+				self.height += GROW_RATE * self.delta_time
+				self.second_point = (self.pos[0] + self.bend, self.pos[1] - self.height)
+			else:
+				self.growing = False
+
+		self.draw()
+
+	def draw(self):
+		self.rect = pygame.draw.line(self.display_surface, "#00af00", self.pos, self.second_point, 3)
+		
+		if self.mask == None:
+			self.mask = pygame.mask.Mask((self.rect.width, self.rect.height))
+			self.mask.fill()
 
 	def on_collision(self, parent):
 		parent.grass_list.remove(self)

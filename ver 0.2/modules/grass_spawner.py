@@ -52,7 +52,7 @@ class GrassSpawner:
 
 				for grid in self.grid_list:
 					if grid.rect.collidepoint(random_ground_x, random_ground_y):
-						grid.add_grass(Grass((random_ground_x, random_ground_y), self))
+						grid.add_grass(GrassStraw((random_ground_x, random_ground_y), self))
 
 			self.grass_index = 0
 		else:
