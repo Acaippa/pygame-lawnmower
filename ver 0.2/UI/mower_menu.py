@@ -1,5 +1,6 @@
 import pygame
 from modules.mower import*
+from UI.container import*
 
 class MowerMenu:
 	def __init__(self, level):
@@ -35,12 +36,17 @@ class MowerMenu:
 
 		self.item_list = [] # all the items inside the menu.
 
+		self.main_container = Container(surface=self.surface)
+
+
 	def update(self, dt):
 		self.delta_time = dt
 
 		self.move()
 
 		self.draw()
+
+		self.main_container.update(self.delta_time)
 
 	def draw(self):
 		self.display_surface.blit(self.surface, self.pos)
