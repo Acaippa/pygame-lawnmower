@@ -38,6 +38,7 @@ class MowerMenu:
 
 		self.main_container = Container(surface=self.surface)
 
+		self.test_container = Container(container=self.main_container, background="#ffffff")
 
 	def update(self, dt):
 		self.delta_time = dt
