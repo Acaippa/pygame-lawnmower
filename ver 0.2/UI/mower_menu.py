@@ -36,9 +36,13 @@ class MowerMenu:
 
 		self.item_list = [] # all the items inside the menu.
 
-		self.main_container = Container(surface=self.surface)
+		self.main_container = Container(surface=self.surface, overflow=2)
 
-		self.test_container = Container(container=self.main_container, background="#ffffff")
+		self.test_container = Container(container=self.main_container, background="#00ff00")
+		self.test_container = Container(container=self.main_container, background="#ff0000")
+		self.test_container = Container(container=self.main_container, background="#ffff00")
+		self.test_container = Container(container=self.main_container, background="#ff00ff")
+		
 
 	def update(self, dt):
 		self.delta_time = dt

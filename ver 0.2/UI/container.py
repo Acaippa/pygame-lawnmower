@@ -30,7 +30,7 @@ class Container:
 
 		self.update_surface()
 
-		if len(self.item_list) != 0:
+		if len(self.item_list) > 0:
 			self.update_items()
 
 		self.draw()
@@ -49,16 +49,20 @@ class Container:
 			self.size = self.display_surface.get_size()
 
 	def update_items(self):
-		y = 1
+		y = 0
+		x = -1
 
-		for index, item in enumerate(self.item_list):
-			if index < self.overflow_int:
-				item.pos = self.size[0] / self.overflow_int * index, y
-				item.size = self.size[0] / self.overflow_int, self.size[0] / self.overflow_int
-				item.update(self.delta_time)
-				self.surface.blit(item.surface, item.pos)
+		for item in self.item_list:
+			if x != self.overflow_int -1:
+				x += 1
 			else:
+				x = 0
 				y += 1
+
+			item.size = self.size[0] // self.overflow_int, self.size[0] // self.overflow_int
+			item.pos = item.size[0] * x, item.size[1] * y
+			self.surface.blit(item.surface, item.pos)
+			item.update(self.delta_time)
 
 	def add_item(self, item):
 		self.item_list.append(item)
