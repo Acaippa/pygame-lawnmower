@@ -19,6 +19,8 @@ class Container:
 
 		self.overflow_int = kwargs.get("overflow", 2)
 
+		self.padding = kwargs.get("padding", 0)
+
 		self.background_color = kwargs.get("background", None)
 
 		self.update_surface()
@@ -59,8 +61,10 @@ class Container:
 				x = 0
 				y += 1
 
-			item.size = self.size[0] // self.overflow_int, self.size[0] // self.overflow_int
-			item.pos = item.size[0] * x, item.size[1] * y
+			# Change the width of the item to be the width of the container divided by the amount of items per row minus the padding of the items.
+			item.size = (self.size[0] - self.padding * 3) // self.overflow_int, (self.size[0] - self.padding * 3) // self.overflow_int
+			item.pos = (item.size[0] + self.padding) * x + self.padding, (item.size[1] + self.padding) * y + self.padding
+
 			self.surface.blit(item.surface, item.pos)
 			item.update(self.delta_time)
 
