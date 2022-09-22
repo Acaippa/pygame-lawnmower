@@ -10,6 +10,8 @@ class Mower(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		self.display_surface = pygame.display.get_surface()
 
+		self.image_path = image
+
 		self.image = pygame.image.load(image).convert_alpha()
 		w, h = self.image.get_size()
 		self.image = pygame.transform.scale(self.image, (w * MOWER_SIZE, h * MOWER_SIZE)) # Multiply the size of the mower according to settings.py.
@@ -201,4 +203,4 @@ class Bag:
 
 class Mower01(Mower):
 	def __init__(self, level):
-		super().__init__("images/lawn_mower01.png", (10,3), level, bag=("images/mower_bag01.png", "images/mower_bag01drag.png"))
+		super().__init__("images/mower01.png", (10,3), level, bag=("images/mower_bag01.png", "images/mower_bag01drag.png"))

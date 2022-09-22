@@ -23,7 +23,7 @@ class MowerMenu:
 		w, h = self.display_surface.get_size()
 		self.surface = pygame.Surface((self.width, h - self.margin * 2))
 
-		self.background_color = "#7f2424"
+		self.background_color = "#1A1A1A"
 
 		self.surface.fill(self.background_color)
 
@@ -34,14 +34,9 @@ class MowerMenu:
 
 		self.hidden = True
 
-		self.item_list = [] # all the items inside the menu.
+		self.item_list = [] # The items inside the main_container will be placed here.
 
 		self.main_container = Container(surface=self.surface, overflow=2, padding=10)
-
-		self.test_container = Container(container=self.main_container, background="#00ff00")
-		self.test_container = Container(container=self.main_container, background="#ff0000")
-		self.test_container = Container(container=self.main_container, background="#ffff00")
-		self.test_container = Container(container=self.main_container, background="#ff00ff")
 		
 
 	def update(self, dt):
