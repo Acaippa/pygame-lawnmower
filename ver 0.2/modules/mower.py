@@ -204,3 +204,7 @@ class Bag:
 class Mower01(Mower):
 	def __init__(self, level):
 		super().__init__("images/mower01.png", (10,3), level, bag=("images/mower_bag01.png", "images/mower_bag01drag.png"))
+
+class Mower02(Mower):
+	def __init__(self, level):
+		super().__init__("images/mower02.png", (10,3), level, bag=("images/mower_bag01.png", "images/mower_bag01drag.png"))

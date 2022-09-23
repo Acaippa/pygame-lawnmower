@@ -1,6 +1,7 @@
 import pygame
 from modules.mower import*
 from UI.container import*
+from UI.image import*
 
 class MowerMenu:
 	def __init__(self, level):
@@ -11,7 +12,8 @@ class MowerMenu:
 		self.level = level
 
 		self.mower_list = [
-			Mower01(self.level)
+			Mower01(self.level),
+			Mower02(self.level)
 		]
 
 		self.margin = 30
@@ -41,6 +43,8 @@ class MowerMenu:
 
 	def update(self, dt):
 		self.delta_time = dt
+
+		self.draw_items()
 
 		self.move()
 
@@ -79,3 +83,13 @@ class MowerMenu:
 
 		if not self.hidden:
 			self.show_self()
+
+	def draw_items(self):
+		# Clear the item list to prevent lag.
+		self.main_container.item_list.clear()
+
+		for mower in self.mower_list:
+			container = Container(container=self.main_container, background="#3f3f3f", overflow=1)
+			image = Image(container = container, image = mower.image_path, adapt=True)
+			mouse = pygame.mouse.get_pos()
+
