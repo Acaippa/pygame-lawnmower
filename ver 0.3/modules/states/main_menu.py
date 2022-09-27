@@ -1,5 +1,6 @@
 import pygame
 from modules.UI.text import *
+from modules.UI.button import *
 
 class MainMenu:
 	def __init__(self, parent):
@@ -19,7 +20,8 @@ class MainMenu:
 
 		self.item_list = []
 
-		self.test_text = Text(self, text="Mowe lawn, Mowe!", pos=("center", 40), size=50)
+		self.title = Text(self, text="Mowe lawn, Mowe!", pos=("center", 40), size=50)
+		self.play_button = Button(self, text="Play", pos=("center", 190), size=30, command=lambda: self.parent.change_state("GameModeMenu"))
 
 	def update(self, dt):
 		self.delta_time = dt

@@ -1,5 +1,6 @@
 import pygame
 from modules.states.main_menu import *
+from modules.states.game_mode_menu import *
 
 class Game:
 	def __init__(self, display):
@@ -12,7 +13,8 @@ class Game:
 		self.delta_time = 0
 
 		self.states = {
-			"MainMenu" : MainMenu(self)
+			"MainMenu" : MainMenu(self),
+			"GameModeMenu" : GameModeMenu(self)
 		}
 
 		self.state = "MainMenu"
@@ -21,3 +23,6 @@ class Game:
 		self.delta_time = dt
 
 		self.states[self.state].update(self.delta_time)
+
+	def change_state(self, state):
+		self.state = state
