@@ -13,8 +13,6 @@ class Text:
 
 		self.font = pygame.font.Font(self.settings["font_path"] + self.settings["font_name"], self.font_size)
 
-		self.rect = pygame.Rect((20, 20), (20, 20))
-
 		self.text = kwargs.get("text", " ")
 
 		self.pos = kwargs.get("pos", (0, 0))
@@ -34,28 +32,29 @@ class Text:
 
 		self.delta_time = 0
 
+		self.update_text()
+
 	def update(self, dt):
 		self.delta_time = dt
-
-		if len(self.cmd_list) != 0:
-			for cmd in self.cmd_list:
-				cmd()
 
 		self.update_text()
 
 		self.update_pos()
 
+		if len(self.cmd_list) != 0:
+			for cmd in self.cmd_list:
+				cmd()
+
 		self.draw()
 
 	def draw(self):
-		self.rect.topleft = self.pos
 		self.display_surface.blit(self.rendered_font, self.pos)
 
 	def update_text(self):
 		self.font = pygame.font.Font(self.settings["font_path"] + self.settings["font_name"], self.font_size)
 		self.rendered_font = self.font.render(self.text, True, self.color)
 		self.rect = self.rendered_font.get_rect()
-
+		
 	def update_pos(self):
 		w, h = self.display_surface.get_size() if self.container == None else self.container.size
 
@@ -76,3 +75,5 @@ class Text:
 
 		if self.pos[1] == "b":
 			self.pos = self.pos[1], h - self.rendered_font.get_height() - self.padding
+
+		self.rect.topleft = self.pos

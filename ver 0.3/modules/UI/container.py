@@ -34,7 +34,7 @@ class Container:
 			offset_y = self.pos[1] + item.rect.height * index
 
 			item.pos = item.pos[0] + offset_x, item.pos[1] + offset_y
-			print(item.rect.height)
 
 			item.update(self.delta_time)
+			item.pos = item.pos[0] - offset_x, item.pos[1] - offset_y
 

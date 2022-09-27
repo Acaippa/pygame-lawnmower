@@ -32,8 +32,6 @@ class GameModeMenu:
 		self.delta_time = dt
 		self.draw_background()
 
-		self.main_container.update(self.dt)
-
 		self.update_items()
 
 		self.draw()
