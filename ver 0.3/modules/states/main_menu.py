@@ -1,8 +1,11 @@
 import pygame
+from modules.UI.text import *
 
 class MainMenu:
-	def __init__(self):
+	def __init__(self, parent):
 		self.display_surface = pygame.display.get_surface()
+
+		self.parent = parent
 
 		self.delta_time = 0
 
@@ -14,12 +17,26 @@ class MainMenu:
 
 		self.background_image = pygame.transform.scale(self.background_image, (w, h))
 
+		self.item_list = []
+
+		self.test_text = Text(self, text="Mowe lawn, Mowe!", pos=("center", 40), size=50)
+
 	def update(self, dt):
 		self.delta_time = dt
+		
+		self.draw_background()
+
+		self.update_items()
 
 		self.draw()
 
 	def draw(self):
+		self.display_surface.blit(self.surface, (0,0))
+
+	def update_items(self):
+		for i in self.item_list:
+			i.update(self.delta_time)
+
+	def draw_background(self): # Fill the screen with white and draw the background.
 		self.surface.fill("white")
 		self.surface.blit(self.background_image, (0,0))
-		self.display_surface.blit(self.surface, (0,0))

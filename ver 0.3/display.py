@@ -8,7 +8,7 @@ class Display:
 
 		width, height = self.settings["win_width"], self.settings["win_height"]
 
-		self.display_surface = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+		self.display_surface = pygame.display.set_mode((width, height))
 
 		self.fps = self.settings["fps"]
 
