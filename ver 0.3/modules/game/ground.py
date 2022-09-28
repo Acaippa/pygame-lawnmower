@@ -1,4 +1,5 @@
 import pygame
+from modules.game.grass import*
 
 class Ground:
 	def __init__(self, level):
@@ -10,7 +11,7 @@ class Ground:
 
 		w, h = self.display_surface.get_size()
 
-		self.margin = 30
+		self.margin = 120
 
 		self.background_color = "#094a16"
 
