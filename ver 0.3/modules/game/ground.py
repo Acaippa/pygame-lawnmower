@@ -1,5 +1,6 @@
 import pygame
 from modules.game.grass import*
+from modules.game.grid import*
 
 class Ground:
 	def __init__(self, level):
@@ -11,20 +12,24 @@ class Ground:
 
 		w, h = self.display_surface.get_size()
 
-		self.margin = 120
+		self.margin_x, self.margin_y = 40, 110 # Optimized margins making the size of the ground round.
 
 		self.background_color = "#094a16"
 
-		self.surface = pygame.Surface((w-self.margin*2, h-self.margin*2))
+		self.surface = pygame.Surface((w-self.margin_x*2, h-self.margin_y*2))
 
 		self.surface.fill(self.background_color)
 
-		self.pos = (self.margin, self.margin)
+		self.pos = (self.margin_x, self.margin_y * 1.5)
+
+		self.grid = Grid(self)
 
 	def update(self, dt):
 		self.delta_time = dt
 
+
 		self.draw()
+		self.grid.update(dt)
 
 	def draw(self):
 		self.display_surface.blit(self.surface, self.pos)

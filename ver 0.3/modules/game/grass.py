@@ -1,5 +1,6 @@
 import pygame
 import random
+from modules.game.grid import*
 
 class Grass:
 	def __init__(self, parent, **kwargs):
@@ -16,6 +17,8 @@ class Grass:
 		self.bend = random.uniform(-2, 2)
 
 		self.color = kwargs.get("color", "#00ff00")
+
+		self.grid = Grid(self)
 
 	def update(self, dt):
 		self.delta_time = dt
