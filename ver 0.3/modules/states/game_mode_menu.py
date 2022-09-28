@@ -23,7 +23,7 @@ class GameModeMenu:
 
 		self.main_container = Container(self, pos=(150, 160), size=(w-300, h-120))
 
-		Button(self, container=self.main_container, text="Test_level") # Test level button.
+		Button(self, container=self.main_container, text="Test_level", command=lambda: self.parent.change_state("TestLevel")) # Test level button.
 
 		self.title = Text(self, text="Choose a Level!", pos=("center", 40), size=40)
 
