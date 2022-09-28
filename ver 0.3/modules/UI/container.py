@@ -16,6 +16,8 @@ class Container:
 
 		self.overflow_int = kwargs.get("overflow", 2)
 
+		self.padding = kwargs.get("padding", 0)
+
 		self.item_list = []
 
 	def update(self, dt):
@@ -31,7 +33,7 @@ class Container:
 	def update_items(self):
 		for index, item in enumerate(self.item_list):
 			offset_x = self.pos[0]
-			offset_y = self.pos[1] + item.rect.height * index
+			offset_y = self.pos[1] + (item.rect.height + self.padding + item.padding) * index
 
 			item.pos = item.pos[0] + offset_x, item.pos[1] + offset_y
 
