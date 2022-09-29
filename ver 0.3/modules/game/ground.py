@@ -27,9 +27,9 @@ class Ground:
 	def update(self, dt):
 		self.delta_time = dt
 
+		self.grid.update(dt)
 
 		self.draw()
-		self.grid.update(dt)
 
 	def draw(self):
 		self.display_surface.blit(self.surface, self.pos)
