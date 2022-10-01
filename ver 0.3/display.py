@@ -1,6 +1,7 @@
 import pygame
 from modules.settings.json_manager import*
 from game import*
+from debug import*
 
 class Display:
 	def __init__(self):
@@ -34,4 +35,5 @@ class Display:
 
 			self.delta_time = self.clock.tick(self.fps) / 1000
 			self.actual_fps = self.clock.get_fps()
+			Debug(text=int(self.actual_fps))
 			pygame.display.flip()
