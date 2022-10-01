@@ -18,8 +18,6 @@ class Grass:
 
 		self.color = kwargs.get("color", "#00ff00")
 
-		self.grid = Grid(self)
-
 	def update(self, dt):
 		self.delta_time = dt
 

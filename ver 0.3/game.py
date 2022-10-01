@@ -1,7 +1,7 @@
 import pygame
 from modules.states.main_menu import *
 from modules.states.game_mode_menu import *
-from modules.states.levels.test_level import*
+from modules.states.levels.test_level import *
 
 class Game:
 	def __init__(self, display):
