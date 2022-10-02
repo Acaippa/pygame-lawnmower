@@ -13,11 +13,13 @@ class Game:
 
 		self.delta_time = 0
 
+		self.current_state = MainMenu(self)
+
 		self.states = {
-			"MainMenu" : MainMenu(self),
-			"GameModeMenu" : GameModeMenu(self),
+			"MainMenu" : MainMenu,
+			"GameModeMenu" : GameModeMenu,
 			
-			"TestLevel" : TestLevel(self)
+			"TestLevel" : TestLevel
 		}
 
 		self.state = "MainMenu"
@@ -25,7 +27,8 @@ class Game:
 	def update(self, dt):
 		self.delta_time = dt
 
-		self.states[self.state].update(self.delta_time)
+		self.current_state.update(self.delta_time)
 
-	def change_state(self, state):
+	def change_state(self, state): # Change the state and init the state
 		self.state = state
+		self.current_state = self.states[self.state](self)

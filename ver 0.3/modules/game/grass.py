@@ -6,7 +6,7 @@ class Grass:
 	def __init__(self, parent, **kwargs):
 		self.parent = parent
 
-		self.display_surface = self.parent.display_surface # Test_level surface
+		self.display_surface = parent.display_surface # Ground.py surface
 
 		self.delta_time = 0
 
@@ -18,10 +18,25 @@ class Grass:
 
 		self.color = kwargs.get("color", "#00ff00")
 
+		self.surface = pygame.Surface((6, self.height), pygame.SRCALPHA) #TODO: make the height of the surface dynamically change with the height of the grass
+
+		self.calc_blit_pos()
+
 	def update(self, dt):
 		self.delta_time = dt
+
+		self.update_surface()
+
+		self.calc_blit_pos()
 
 		self.draw()
 
 	def draw(self):
-		pygame.draw.line(self.display_surface, self.color, self.pos, (self.pos[0] + self.bend, self.pos[1] + self.height), width = 2)
+		self.display_surface.blit(self.surface, self.blit_pos)
+
+	def calc_blit_pos(self): # Draw the surface in the bottom center of the display_surface.
+		self.blit_pos = (self.pos[0] + self.surface.get_width() / 2, self.pos[1] - self.surface.get_height())
+
+	def update_surface(self): # Draw the line at the bottom center of the surface.
+		x, y = self.surface.get_width() / 2, self.surface.get_height()
+		pygame.draw.line(self.surface, self.color, (x, y), (x + self.bend, y - self.height), width = 3)
