@@ -2,8 +2,6 @@ import pygame
 
 class Container:
 	def __init__(self, parent, **kwargs):
-		self.display_surface = pygame.display.get_surface()
-
 		self.parent = parent
 
 		self.parent.item_list.append(self)

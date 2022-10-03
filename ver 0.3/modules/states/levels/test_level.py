@@ -1,5 +1,6 @@
 import pygame
 from modules.game.ground import*
+from modules.UI.player_info import*
 
 class TestLevel:
 	def __init__(self, parent):
@@ -15,8 +16,12 @@ class TestLevel:
 
 		self.ground = Ground(self)
 
+		self.player_info = PlayerInfo(self, pos=("center", 10), size=(300, 100))
+
 	def update(self, dt):
 		self.delta_time = dt
+
+		self.player_info.update(self.delta_time)
 
 		self.ground.update(self.delta_time)
 
