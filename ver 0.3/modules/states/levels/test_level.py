@@ -16,7 +16,7 @@ class TestLevel:
 
 		self.ground = Ground(self)
 
-		self.player_info = PlayerInfo(self, pos=("center", 10), size=(300, 100))
+		self.player_info = PlayerInfo(self, pos=("center", 10), size=(500, 100))
 
 	def update(self, dt):
 		self.delta_time = dt

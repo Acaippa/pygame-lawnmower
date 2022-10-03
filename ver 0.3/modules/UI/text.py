@@ -41,6 +41,8 @@ class Text:
 
 		self.update_pos()
 
+		self.update_rect()
+
 		if len(self.cmd_list) != 0:
 			for cmd in self.cmd_list:
 				cmd()
@@ -76,4 +78,5 @@ class Text:
 		if self.pos[1] == "b":
 			self.pos = self.pos[1], h - self.rendered_font.get_height() - self.padding
 
+	def update_rect(self):
 		self.rect.topleft = self.pos

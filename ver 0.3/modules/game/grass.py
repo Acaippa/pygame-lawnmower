@@ -16,7 +16,7 @@ class Grass:
 
 		self.bend = random.uniform(-2, 2)
 
-		self.color = kwargs.get("color", "#00ff00")
+		self.color = kwargs.get("color", "#00af00")
 
 		self.surface = pygame.Surface((6, self.height), pygame.SRCALPHA) #TODO: make the height of the surface dynamically change with the height of the grass
 

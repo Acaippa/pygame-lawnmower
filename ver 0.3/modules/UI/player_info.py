@@ -37,12 +37,13 @@ class PlayerInfo:
 
 		self.money_text = Text(self, text="Money: 0", pos=("center", 10), size=self.font_size, color=self.font_color)
 
-		self.grass_text = Text(self, text="Grass: 0 / 1000", pos=("center", 50), size=self.font_size, color=self.font_color)
+		self.grass_text = Text(self, text="Grass: 0 / 1000", pos=("center", 50), size=self.font_size-5, color=self.font_color)
 
 		self.delta_time = 0
 
 	def update(self, dt):
 		self.delta_time = dt
+		self.draw_background()
 
 		self.update_items()
 
@@ -54,4 +55,7 @@ class PlayerInfo:
 	def update_items(self):
 		for item in self.item_list:
 			item.update(self.delta_time)
+
+	def draw_background(self):
+		self.surface.fill(self.background_color)
 
