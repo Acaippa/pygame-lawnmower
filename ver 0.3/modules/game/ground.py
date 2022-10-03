@@ -36,6 +36,7 @@ class Ground:
 
 	def update(self, dt):
 		self.delta_time = dt
+		self.surface.fill(self.background_color)
 
 		if self.total_grass < GRASS_AMOUNT:
 			self.spawn_grass()
