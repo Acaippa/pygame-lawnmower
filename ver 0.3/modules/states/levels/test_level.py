@@ -32,8 +32,6 @@ class TestLevel:
 
 		self.ground.update(self.delta_time)
 
-		self.shop_menu.destination = (self.shop_menu.pos[0], 20)
-
 		self.shop_menu.update(self.delta_time)
 
 		self.draw()
