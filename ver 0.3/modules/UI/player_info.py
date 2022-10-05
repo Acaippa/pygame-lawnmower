@@ -2,6 +2,7 @@ import pygame
 from modules.handlers.position_handler import *
 from modules.UI.container import *
 from modules.UI.text import *
+from modules.UI.button import *
 
 class PlayerInfo:
 	def __init__(self, level, **kwargs):
@@ -38,6 +39,8 @@ class PlayerInfo:
 		self.money_text = Text(self, text="Money: 0", pos=("center", 10), size=self.font_size, color=self.font_color)
 
 		self.grass_text = Text(self, text="Grass: 0 / 1000", pos=("center", 50), size=self.font_size-5, color=self.font_color)
+
+		self.menu_button = Button(self, text="Shop", pos=("center", 20))
 
 		self.delta_time = 0
 

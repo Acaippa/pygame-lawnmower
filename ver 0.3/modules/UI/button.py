@@ -32,6 +32,13 @@ class Button(Text):
 
 	def on_hover(self):
 		mouse_pos = pygame.mouse.get_pos()
+
+		# In order to detect the collision of the cursor to the rect of the button even if its on a surface, we have to subtract the position of the surface to get the "real" position of the button
+		try:
+			mouse_pos = mouse_pos[0] - self.parent.pos[0], mouse_pos[1] - self.parent.pos[1]
+		except:
+			pass
+
 		mouse_clicked = pygame.mouse.get_pressed()
 
 		if self.rect.collidepoint(mouse_pos):
