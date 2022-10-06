@@ -14,11 +14,11 @@ class ShopMenu:
 
 		self.surface.fill(self.background_color)
 
-		surface_w, surface_h = self.surface.get_size()
+		self.surface_w, self.surface_h = self.surface.get_size()
 
-		display_w, display_h = self.display_surface.get_size()
+		self.display_w, self.display_h = self.display_surface.get_size()
 
-		self.pos = kwargs.get("pos", (display_w / 2 - self.surface.get_width() / 2, - surface_h))
+		self.pos = kwargs.get("pos", (self.display_w / 2 - self.surface.get_width() / 2, - self.surface_h))
 
 		self.item_list = []
 
@@ -27,6 +27,8 @@ class ShopMenu:
 		self.delta_time = 0
 
 		self.destination = self.pos
+
+		self.shown = False
 
 	def update(self, dt):
 		self.delta_time = dt
@@ -53,4 +55,12 @@ class ShopMenu:
 		# If the curent position is close enough to its destination, snap the menu into place so it doesnt oscillate.
 		if hypot(self.pos[0]-self.destination[0], self.pos[1]-self.destination[1]) < range:
 			self.pos = self.destination
+
+	def toggle(self):
+		if self.shown:
+			self.destination = self.pos[0], - self.surface_h
+			self.shown = False
+		else:
+			self.destination = self.pos[0], 100
+			self.shown = True
 

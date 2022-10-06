@@ -9,7 +9,7 @@ class Button(Text):
 
 		self.margin = kwargs.get("margin", 0)
 
-		self.background_color = kwargs.get("background_color", "#2f2f2f")
+		self.background_color = kwargs.get("background", "#2f2f2f")
 
 		self.background_color_hover = kwargs.get("hover_color", "#4f4f4f")
 
@@ -77,7 +77,7 @@ class Button(Text):
 			self.pos = 0 + (self.padding * 5) / 2 + self.margin, self.pos[1]
 
 		if self.pos[1] == "top":
-			self.pos = self.pos[0], 0 + self.rendered_font.get_height() + self.margin
+			self.pos = self.pos[0], 0 + (self.padding * 2) / 2 + self.margin
 
 		if self.pos[1] == "bottom":
 			self.pos = self.pos[1], h - self.rendered_font.get_height() - self.margin

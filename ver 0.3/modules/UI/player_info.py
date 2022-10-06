@@ -40,7 +40,7 @@ class PlayerInfo:
 
 		self.grass_text = Text(self, text="Grass: 0 / 1000", pos=("center", 50), size=self.font_size-5, color=self.font_color)
 
-		self.menu_button = Button(self, text="Shop", pos=("left", 20))
+		self.menu_button = Button(self, text="Shop", pos=("left", "top"), margin=10, background="#4b4b4b", command=self.level.shop_menu.toggle)
 
 		self.delta_time = 0
 
