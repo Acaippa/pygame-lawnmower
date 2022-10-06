@@ -7,6 +7,8 @@ class Button(Text):
 
 		self.padding = kwargs.get("padding", 15)
 
+		self.margin = kwargs.get("margin", 0)
+
 		self.background_color = kwargs.get("background_color", "#2f2f2f")
 
 		self.background_color_hover = kwargs.get("hover_color", "#4f4f4f")
@@ -58,6 +60,27 @@ class Button(Text):
 
 	def fallback_command(self):
 		print(f"Button {__name__} Has no function yet.")
+
+	def update_pos(self):
+		w, h = self.display_surface.get_size() if self.container == None else self.container.size
+
+		if self.pos[0] == "center":
+			self.pos = w / 2 - self.rendered_font.get_width() / 2, self.pos[1]
+
+		if self.pos[1] == "center":
+			self.pos = self.pos[0], h / 2 - self.rendered_font.get_height() / 2
+
+		if self.pos[0] == "right":
+			self.pos = w - (self.padding * 5) / 2 - self.margin, self.pos[1]
+
+		if self.pos[0] == "left":
+			self.pos = 0 + (self.padding * 5) / 2 + self.margin, self.pos[1]
+
+		if self.pos[1] == "top":
+			self.pos = self.pos[0], 0 + self.rendered_font.get_height() + self.margin
+
+		if self.pos[1] == "bottom":
+			self.pos = self.pos[1], h - self.rendered_font.get_height() - self.margin
 
 
 
