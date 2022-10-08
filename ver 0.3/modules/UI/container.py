@@ -18,6 +18,8 @@ class Container:
 
 		self.item_list = []
 
+		self.direction = kwargs.get("direction", "left")
+
 	def update(self, dt):
 		self.delta_time = dt
 
@@ -29,12 +31,36 @@ class Container:
 		pass
 
 	def update_items(self):
-		for index, item in enumerate(self.item_list):
-			offset_x = self.pos[0]
-			offset_y = self.pos[1] + (item.rect.height + self.padding + item.padding) * index
+		x, y = 0, 0
 
-			item.pos = item.pos[0] + offset_x, item.pos[1] + offset_y
+		for item in self.item_list:
+			if self.direction == "right":
+				x += 1
+
+			elif self.direction == "left":
+				x -= 1
+
+			if self.direction == "top":
+				y += 1
+
+			elif self.direction == "bottom":
+				y -= 1
+
+			if x > 0 or x == 0:
+				x_pos = self.pos[0]
+			else:
+				x_pos = self.size[0]
+
+			if y > 0 or y == 0:
+				y_pos = self.pos[0]
+			else:
+				y_pos = self.size[0]
+
+			item.pos = x_pos + (item.rect.width * x), y_pos + (item.rect.height * y) # If x and y is larger than 0
 
 			item.update(self.delta_time)
-			item.pos = item.pos[0] - offset_x, item.pos[1] - offset_y
+
+
+
+
 
