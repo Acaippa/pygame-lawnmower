@@ -18,7 +18,8 @@ class Container:
 
 		self.item_list = []
 
-		self.direction = kwargs.get("direction", "left")
+		self.align = kwargs.get("align", "right")
+		self.direction = kwargs.get("direction", "top")
 
 	def update(self, dt):
 		self.delta_time = dt
@@ -31,32 +32,50 @@ class Container:
 		pass
 
 	def update_items(self):
+		x_dir, y_dir = 0, 0
 		x, y = 0, 0
+		step = 0
 
 		for item in self.item_list:
 			if self.direction == "right":
-				x += 1
+				x_dir = 1
 
 			elif self.direction == "left":
-				x -= 1
+				x_dir = -1
 
-			if self.direction == "top":
-				y += 1
+			if self.direction == "bottom":
+				y_dir = 1
 
-			elif self.direction == "bottom":
-				y -= 1
+			elif self.direction == "top":
+				y_dir = -1
 
-			if x > 0 or x == 0:
-				x_pos = self.pos[0]
+
+			if self.align == "top":
+				self.y_pos = self.pos[1]
+			elif self.align == "bottom":
+				self.y_pos = self.size[1]
+			elif self.align == "centery":
+				self.y_pos = self.size[1] / 2
 			else:
-				x_pos = self.size[0]
+				self.y_pos = self.pos[1]
 
-			if y > 0 or y == 0:
-				y_pos = self.pos[0]
+			if self.align == "right":
+				self.x_pos = self.size[0]
+			elif self.align == "left":
+				self.x_pos = self.pos[0]
+			elif self.align == "centerx":
+				self.x_pos = self.size[0] / 2
 			else:
-				y_pos = self.size[0]
+				self.x_pos = self.pos[0]
 
-			item.pos = x_pos + (item.rect.width * x), y_pos + (item.rect.height * y) # If x and y is larger than 0
+			if self.align == "center":
+				self.x_pos = self.size[0] / 2
+				self.y_pos = self.size[1] / 2
+
+			item.pos = (self.x_pos) + x, (self.y_pos) + y # If x and y is larger than 0
+
+			x += (item.rect.width + self.padding) * x_dir
+			y += (item.rect.height + self.padding) * y_dir
 
 			item.update(self.delta_time)
 
