@@ -1,6 +1,7 @@
 import pygame
 from math import*
 from modules.UI.container import *
+from modules.UI.button import *
 
 class ShopMenu:
 	def __init__(self, parent, **kwargs):
@@ -8,7 +9,7 @@ class ShopMenu:
 
 		self.display_surface = self.parent.surface
 
-		self.surface = pygame.Surface((300, 500))
+		self.surface = pygame.Surface((400, 500))
 
 		self.background_color = kwargs.get("background", "#3f3f3f")
 
@@ -22,18 +23,26 @@ class ShopMenu:
 
 		self.item_list = []
 
-		self.main_container = Container(self, size=self.surface.get_size())
-
 		self.delta_time = 0
 
 		self.destination = self.pos
 
 		self.shown = False
 
+		self.main_container = Container(self, size=self.surface.get_size(), align="left", direction="bottom")
+
+		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="centerx", direction="right")
+
+		self.test_button = Button(self, container=self.section_container, text="Mowders")
+		# self.test_buttond = Button(self, container=self.section_container, text="Mowders")
+
 	def update(self, dt):
 		self.delta_time = dt
+		self.draw_background()
 
 		self.move()
+
+		self.update_items()
 
 		self.draw()
 
@@ -63,4 +72,11 @@ class ShopMenu:
 		else:
 			self.destination = self.pos[0], 100
 			self.shown = True
+
+	def update_items(self):
+		for item in self.item_list:
+			item.update(self.delta_time)
+
+	def draw_background(self):
+		self.surface.fill(self.background_color)
 
