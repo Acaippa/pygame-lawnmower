@@ -34,49 +34,52 @@ class Text:
 
 		self.update_text()
 
+		self.halt = False
+
 	def update(self, dt):
 		self.delta_time = dt
 
-		self.update_text()
+		if not self.halt:
+			self.update_text()
 
-		self.update_pos()
+			self.update_pos()
 
-		self.update_rect()
+			self.update_rect()
 
-		if len(self.cmd_list) != 0:
-			for cmd in self.cmd_list:
-				cmd()
+			if len(self.cmd_list) != 0:
+				for cmd in self.cmd_list:
+					cmd()
 
-		self.draw()
+			self.draw()
 
 	def draw(self):
-		self.display_surface.blit(self.rendered_font, self.pos)
+		self.display_surface.blit(self.image, self.pos)
 
 	def update_text(self):
 		self.font = pygame.font.Font(self.settings["font_path"] + self.settings["font_name"], self.font_size)
-		self.rendered_font = self.font.render(self.text, True, self.color)
-		self.rect = self.rendered_font.get_rect()
+		self.image = self.font.render(self.text, True, self.color)
+		self.rect = self.image.get_rect()
 		
 	def update_pos(self):
 		w, h = self.display_surface.get_size() if self.container == None else self.container.size
 
 		if self.pos[0] == "center":
-			self.pos = w / 2 - self.rendered_font.get_width() / 2, self.pos[1]
+			self.pos = w / 2 - self.image.get_width() / 2, self.pos[1]
 
 		if self.pos[1] == "center":
-			self.pos = self.pos[0], h / 2 - self.rendered_font.get_height() / 2
+			self.pos = self.pos[0], h / 2 - self.image.get_height() / 2
 
 		if self.pos[0] == "r":
-			self.pos = w - self.rendered_font.get_width() - self.padding, self.pos[1]
+			self.pos = w - self.image.get_width() - self.padding, self.pos[1]
 
 		if self.pos[0] == "l":
-			self.pos = 0 + self.rendered_font.get_width() + self.padding, self.pos[1]
+			self.pos = 0 + self.image.get_width() + self.padding, self.pos[1]
 
 		if self.pos[1] == "t":
-			self.pos = self.pos[0], 0 + self.rendered_font.get_height() + self.padding
+			self.pos = self.pos[0], 0 + self.image.get_height() + self.padding
 
 		if self.pos[1] == "b":
-			self.pos = self.pos[1], h - self.rendered_font.get_height() - self.padding
+			self.pos = self.pos[1], h - self.image.get_height() - self.padding
 
 	def update_rect(self):
 		self.rect.topleft = self.pos

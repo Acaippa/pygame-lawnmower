@@ -27,6 +27,8 @@ class GameModeMenu:
 		
 		self.title = Text(self, text="Choose a Level!", pos=("center", 40), size=40)
 
+		self.pos = (0, 0)
+
 	def update(self, dt):
 		self.delta_time = dt
 		self.draw_background()

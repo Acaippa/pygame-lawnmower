@@ -65,10 +65,10 @@ class Button(Text):
 		w, h = self.display_surface.get_size() if self.container == None else self.container.size
 
 		if self.pos[0] == "center":
-			self.pos = w / 2 - self.rendered_font.get_width() / 2, self.pos[1]
+			self.pos = w / 2 - self.image.get_width() / 2, self.pos[1]
 
 		if self.pos[1] == "center":
-			self.pos = self.pos[0], h / 2 - self.rendered_font.get_height() / 2
+			self.pos = self.pos[0], h / 2 - self.image.get_height() / 2
 
 		if self.pos[0] == "right":
 			self.pos = w - (self.padding * 5) / 2 - self.margin, self.pos[1]
@@ -80,7 +80,7 @@ class Button(Text):
 			self.pos = self.pos[0], 0 + (self.padding * 2) / 2 + self.margin
 
 		if self.pos[1] == "bottom":
-			self.pos = self.pos[1], h - self.rendered_font.get_height() - self.margin
+			self.pos = self.pos[1], h - self.image.get_height() - self.margin
 
 
 

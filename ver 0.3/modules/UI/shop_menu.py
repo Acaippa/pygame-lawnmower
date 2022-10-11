@@ -2,6 +2,7 @@ import pygame
 from math import*
 from modules.UI.container import *
 from modules.UI.button import *
+from modules.UI.image import *
 
 class ShopMenu:
 	def __init__(self, parent, **kwargs):
@@ -29,16 +30,22 @@ class ShopMenu:
 
 		self.shown = False
 
-		self.main_container = Container(self, size=self.surface.get_size(), align="centerx", direction="bottom")
+		self.main_container = Container(self, size=self.surface.get_size(), align="centerx", direction="bottom", padding=15)
 
-		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding=30, padding_between=40)
+		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding_between=40)
 
-		self.mower_button = Button(self, container=self.section_container, text="Mowers")
-		self.mower_button = Button(self, container=self.section_container, text="Bags")
+		self.mower_button = Button(self, container=self.section_container, text="Mowers", command=self.activate_mower_section)
+		self.bag_button = Button(self, container=self.section_container, text="Bags", command=self.activate_bag_section)
 
-		self.mower_section = Container(self, container=self.main_container, padding=20, align="left", direction="right")
-		self.mower_button = Button(self, container=self.mower_section, text="Bags")
-		self.mower_button = Button(self, container=self.mower_section, text="Bags")
+		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]))
+
+		self.mower_button = Container(self, container=self.mower_section, align="left", direction="bottom", size=(70, 70), background="#ff0000", padding=10)
+		self.mower_buttond = Image(self, container=self.mower_button, image="images/main_menu/background.png", size=(70, 50))
+		self.mower_button3 = Text(self, container=self.mower_button, text="bruh")
+
+		self.bag_section = Container(self, container=self.main_container, align="left", direction="right")
+		self.mower_button = Button(self, container=self.bag_section, text="Bags")
+		self.bag_section.halt = True
 
 	def update(self, dt):
 		self.delta_time = dt
@@ -83,4 +90,14 @@ class ShopMenu:
 
 	def draw_background(self):
 		self.surface.fill(self.background_color)
+
+	def activate_mower_section(self):
+		self.mower_section.halt = False
+		self.bag_section.halt = True
+
+	def activate_bag_section(self):
+		self.mower_section.halt = True
+		self.bag_section.halt = False
+
+
 
