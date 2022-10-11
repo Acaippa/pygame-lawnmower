@@ -21,6 +21,7 @@ class Container:
 		self.overflow_int = kwargs.get("overflow", 2)
 
 		self.padding = kwargs.get("padding", 0)
+		self.padding_between = kwargs.get("padding_between", 0)
 
 		self.item_list = []
 
@@ -28,6 +29,8 @@ class Container:
 		self.direction = kwargs.get("direction", "top")
 
 		self.rect = pygame.Rect(self.pos, self.size)
+
+		self.overflow = kwargs.get("overflow", 2)
 
 	def update(self, dt):
 		self.delta_time = dt
@@ -37,7 +40,6 @@ class Container:
 	def update_items(self):
 		x_dir, y_dir = 0, 0
 		x, y = 0, 0
-		step = 0
 
 		for item in self.item_list:
 			if self.direction == "right":
@@ -67,11 +69,9 @@ class Container:
 			elif self.align == "left":
 				self.x_pos = self.pos[0]
 			elif self.align == "centerx":
-				self.x_pos = self.pos[0] + ((self.size[0] - x) / 10) * len(self.item_list)
+				self.x_pos = self.pos[0] / 2
 			else:
 				self.x_pos = self.pos[0]
-
-			print(self.size[0] - x)
 
 			if self.align == "center":
 				self.x_pos = self.size[0] / 2
@@ -80,10 +80,14 @@ class Container:
 			if item.__class__.__name__ != "Container":
 				item.pos = self.x_pos + (x + item.rect.width / 2 - item.rendered_font.get_width() / 2) + self.padding, self.y_pos + (y + item.rect.height / 2 - item.rendered_font.get_height() / 2) + self.padding # If x and y is larger than 0
 			else:
-				item.pos = self.x_pos + (x) + self.padding, self.y_pos + (y) + self.padding # If x and y is larger than 0
+				item.pos = self.x_pos + (x + self.padding * 2), self.y_pos + (y + self.padding * 2)
 
-			x += (item.rect.width + self.padding) * x_dir
-			y += (item.rect.height + self.padding) * y_dir
+			if x > self.size[0]:
+				y += (item.rect.height + self.padding_between)
+				x = - (item.rect.width + self.padding_between)
+
+			x += (item.rect.width + self.padding_between) * x_dir
+			y += (item.rect.height + self.padding_between) * y_dir
 
 			item.update(self.delta_time)
 

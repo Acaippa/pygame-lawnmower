@@ -29,12 +29,16 @@ class ShopMenu:
 
 		self.shown = False
 
-		self.main_container = Container(self, size=self.surface.get_size(), align="left", direction="bottom")
+		self.main_container = Container(self, size=self.surface.get_size(), align="centerx", direction="bottom")
 
-		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="centerx", direction="right")
+		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding=30, padding_between=40)
 
-		self.test_button = Button(self, container=self.section_container, text="Mowders")
-		# self.test_buttond = Button(self, container=self.section_container, text="Mowders")
+		self.mower_button = Button(self, container=self.section_container, text="Mowers")
+		self.mower_button = Button(self, container=self.section_container, text="Bags")
+
+		self.mower_section = Container(self, container=self.main_container, padding=20, align="left", direction="right")
+		self.mower_button = Button(self, container=self.mower_section, text="Bags")
+		self.mower_button = Button(self, container=self.mower_section, text="Bags")
 
 	def update(self, dt):
 		self.delta_time = dt
