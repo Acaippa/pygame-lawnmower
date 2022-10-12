@@ -31,4 +31,5 @@ class Game:
 
 	def change_state(self, state): # Change the state and init the state
 		self.state = state
+		del self.current_state
 		self.current_state = self.states[self.state](self)

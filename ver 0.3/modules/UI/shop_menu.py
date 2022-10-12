@@ -3,6 +3,8 @@ from math import*
 from modules.UI.container import *
 from modules.UI.button import *
 from modules.UI.image import *
+from modules.settings.json_manager import *
+import json
 
 class ShopMenu:
 	def __init__(self, parent, **kwargs):
@@ -30,6 +32,8 @@ class ShopMenu:
 
 		self.shown = False
 
+		self.mowers = Load("modules/game/mowers.json")["mowers"]
+
 		self.main_container = Container(self, size=self.surface.get_size(), align="centerx", direction="bottom", padding=15)
 
 		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding_between=40)
@@ -37,11 +41,12 @@ class ShopMenu:
 		self.mower_button = Button(self, container=self.section_container, text="Mowers", command=self.activate_mower_section)
 		self.bag_button = Button(self, container=self.section_container, text="Bags", command=self.activate_bag_section)
 
-		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]))
+		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
 
-		self.mower_buttondd = Container(self, container=self.mower_section, align="left", direction="bottom", size=(70, 70), background="#ff0000", padding=10, command=lambda: print("gay"))
-		self.mower_buttond = Image(self, container=self.mower_buttondd, image="images/main_menu/background.png", size=(70, 50))
-		self.mower_button3 = Text(self, container=self.mower_buttondd, text="bruh")
+		for mower in self.mowers:
+			container = Container(self, container=self.mower_section, background="#5f5f5f", padding=5, align="left", direction="bottom", size=(100, 120))
+			Image(self, container=container, image=mower["path"], size=(100, 100))
+			Text(self, container=container, text=str(mower["price"]))
 
 		self.bag_section = Container(self, container=self.main_container, align="left", direction="right")
 		self.mower_button = Button(self, container=self.bag_section, text="Bags")
