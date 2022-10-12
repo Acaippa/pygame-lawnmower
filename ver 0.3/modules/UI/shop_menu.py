@@ -39,9 +39,9 @@ class ShopMenu:
 
 		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]))
 
-		self.mower_button = Container(self, container=self.mower_section, align="left", direction="bottom", size=(70, 70), background="#ff0000", padding=10)
-		self.mower_buttond = Image(self, container=self.mower_button, image="images/main_menu/background.png", size=(70, 50))
-		self.mower_button3 = Text(self, container=self.mower_button, text="bruh")
+		self.mower_buttondd = Container(self, container=self.mower_section, align="left", direction="bottom", size=(70, 70), background="#ff0000", padding=10, command=lambda: print("gay"))
+		self.mower_buttond = Image(self, container=self.mower_buttondd, image="images/main_menu/background.png", size=(70, 50))
+		self.mower_button3 = Text(self, container=self.mower_buttondd, text="bruh")
 
 		self.bag_section = Container(self, container=self.main_container, align="left", direction="right")
 		self.mower_button = Button(self, container=self.bag_section, text="Bags")

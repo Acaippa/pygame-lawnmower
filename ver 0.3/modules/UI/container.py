@@ -43,11 +43,11 @@ class Container:
 
 		self.click_check = True
 
-		self.command = self.fallback_command
-
+		self.command = kwargs.get("command", self.fallback_command)
 
 	def update(self, dt):
 		self.delta_time = dt
+		self.rect = pygame.Rect(self.pos, self.size)
 
 		self.draw()
 
@@ -123,6 +123,9 @@ class Container:
 
 		if self.rect.collidepoint(mouse_pos) and mouse_clicked[0] == False and self.click_check:
 			self.command()
+			self.click_check = False
+
+		if self.rect.collidepoint(mouse_pos) == False:
 			self.click_check = False
 
 	def fallback_command(self):
