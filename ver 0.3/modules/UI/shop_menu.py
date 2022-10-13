@@ -49,7 +49,7 @@ class ShopMenu:
 		for index, mower in enumerate(self.mowers):
 			self.mower_dict[index] = Mower(self, dict=mower)
 
-			container = Container(self, container=self.mower_section, background="#5f5f5f", padding=5, align="left", direction="bottom", size=(100, 120))
+			container = Container(self, container=self.mower_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(100, 120))
 			Image(self, container=container, image=mower["image"], size=(100, 100))
 			Text(self, container=container, text=str(mower["price"]))
 

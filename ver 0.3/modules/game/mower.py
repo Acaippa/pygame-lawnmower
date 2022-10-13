@@ -1,5 +1,6 @@
 import pygame
 from math import* 
+from random import *
 
 class Mower:
 	def __init__(self, parent, **kwargs):
@@ -27,6 +28,8 @@ class Mower:
 
 		self.image = pygame.transform.scale(self.image, self.size)
 
+		self.shaking = True
+
 		self.delta_time = 0
 
 	def update(self, dt):
@@ -39,7 +42,7 @@ class Mower:
 	def draw(self):
 		self.rotated_image = pygame.transform.rotate(self.image, self.angle)
 		self.rect = self.rotated_image.get_rect(center=self.pos)
-		self.display_surface.blit(self.rotated_image, self.rect)
+		self.display_surface.blit(self.rotated_image, ((self.rect[0] - 1 * sin(radians(randint(0, 360)))), self.rect[1] - 1 * cos(radians(randint(0, 360)))))
 
 	def input(self):
 		rads = radians(self.angle)
