@@ -1,7 +1,7 @@
 {
 	"mowers": [
 		{
-			"speed" : 20, "path" : "images/mowers/mower01.png", "margin" : 20, "price" : 200
+			"speed" : 200, "image" : "images/mowers/mower01.png", "margin" : 20, "price" : 200, "turn_rate" : 60
 		}
 	]
 }

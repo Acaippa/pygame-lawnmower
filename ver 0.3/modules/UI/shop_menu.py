@@ -4,6 +4,7 @@ from modules.UI.container import *
 from modules.UI.button import *
 from modules.UI.image import *
 from modules.settings.json_manager import *
+from modules.game.mower import *
 import json
 
 class ShopMenu:
@@ -43,10 +44,16 @@ class ShopMenu:
 
 		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
 
-		for mower in self.mowers:
+		self.mower_dict = {}
+
+		for index, mower in enumerate(self.mowers):
+			self.mower_dict[index] = Mower(self, dict=mower)
+
 			container = Container(self, container=self.mower_section, background="#5f5f5f", padding=5, align="left", direction="bottom", size=(100, 120))
-			Image(self, container=container, image=mower["path"], size=(100, 100))
+			Image(self, container=container, image=mower["image"], size=(100, 100))
 			Text(self, container=container, text=str(mower["price"]))
+
+		self.current_mower = self.mower_dict[0]
 
 		self.bag_section = Container(self, container=self.main_container, align="left", direction="right")
 		self.mower_button = Button(self, container=self.bag_section, text="Bags")
@@ -59,6 +66,8 @@ class ShopMenu:
 		self.move()
 
 		self.update_items()
+
+		self.current_mower.update(self.delta_time)
 
 		self.draw()
 
