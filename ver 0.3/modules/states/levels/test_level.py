@@ -13,6 +13,8 @@ class TestLevel:
 
 		self.background_color = ("#131313")
 
+		self.current_mower = None
+
 		self.delta_time = 0
 
 		self.pos = (0, 0)

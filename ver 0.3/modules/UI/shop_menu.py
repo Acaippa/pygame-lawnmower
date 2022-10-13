@@ -55,6 +55,8 @@ class ShopMenu:
 
 		self.current_mower = self.mower_dict[0]
 
+		self.parent.current_mower = self.current_mower
+
 		self.bag_section = Container(self, container=self.main_container, align="left", direction="right")
 		self.mower_button = Button(self, container=self.bag_section, text="Bags")
 		self.bag_section.halt = True
