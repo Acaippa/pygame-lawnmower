@@ -77,8 +77,10 @@ class Mower:
 			self.angle += self.turn_rate * self.delta_time
 
 	def cut_grass(self):
+		# print((self.grass_list[0].pos[0] + self.grass_list[0].parent.parent.pos[0]), (self.grass_list[0].pos[1] + self.grass_list[0].parent.parent.pos[1]))
 		for grass in self.grass_list:
-			offset_x, offset_y = self.pos[0] - grass.pos[0], self.pos[1] - grass.pos[1] 
+			offset_x, offset_y = (grass.pos[0] + grass.parent.parent.pos[0]) - self.pos[0], (grass.pos[1] + grass.parent.parent.pos[1]) - self.pos[1]
 
-			if self.cutting_mask.overlap(grass.mask, (offset_x, offset_y)):
+			if self.cutting_mask.overlap(grass.mask, (offset_x, offset_y)) != None:
 				grass.remove_self()
+				print("gay")

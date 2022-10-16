@@ -34,6 +34,7 @@ class Grass:
 		self.draw()
 
 	def draw(self):
+		self.mask = pygame.mask.from_surface(self.surface)
 		self.display_surface.blit(self.surface, self.blit_pos)
 
 	def calc_blit_pos(self): # Draw the surface in the bottom center of the display_surface.
@@ -42,3 +43,6 @@ class Grass:
 	def update_surface(self): # Draw the line at the bottom center of the surface.
 		x, y = self.surface.get_width() / 2, self.surface.get_height()
 		self.rect = pygame.draw.line(self.surface, self.color, (x, y), (x + self.bend, y - self.height), width = 3)
+
+	def remove_self(self):
+		self.parent.grass_list.remove(self)
