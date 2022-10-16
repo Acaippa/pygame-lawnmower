@@ -73,7 +73,8 @@ class Ground:
 
 		for grid in self.grid_list: # Add the all the grass of the grids colliding with the mower to the mowers grass_list
 			if grid.rect.colliderect(mower.cutting_rect):
-				mower.grass_list.append(grid.grass_list)
+				for grass in grid.grass_list:
+					mower.grass_list.append(grass)
 
 			grid.draw()
 			self.total_grass += len(grid.grass_list) # Increment the amount of grass by the amount of gass in the grid instance.

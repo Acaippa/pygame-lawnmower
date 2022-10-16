@@ -35,6 +35,7 @@ class Mower:
 		w, h = self.image.get_size()
 
 		self.cutting_surface = pygame.Surface((w - self.margin, h - self.margin))
+		self.cutting_mask = pygame.mask.from_surface(self.cutting_surface)
 
 		self.cutting_rect = self.cutting_surface.get_rect()
 
@@ -79,5 +80,5 @@ class Mower:
 		for grass in self.grass_list:
 			offset_x, offset_y = self.pos[0] - grass.pos[0], self.pos[1] - grass.pos[1] 
 
-			if self.cutting_surface.overlap(grass.mask, (offset_x, offset_y)):
+			if self.cutting_mask.overlap(grass.mask, (offset_x, offset_y)):
 				grass.remove_self()
