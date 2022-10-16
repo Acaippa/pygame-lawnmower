@@ -72,7 +72,7 @@ class Ground:
 		mower.grass_list.clear()
 
 		for grid in self.grid_list: # Add the all the grass of the grids colliding with the mower to the mowers grass_list
-			if grid.rect.colliderect(mower.cutting_rect):
+			if mower.rect.colliderect(pygame.Rect(grid.rect[0] + self.pos[0], grid.rect[1] + self.pos[1], grid.rect.width, grid.rect.height)):
 				for grass in grid.grass_list:
 					mower.grass_list.append(grass)
 

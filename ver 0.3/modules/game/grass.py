@@ -20,6 +20,8 @@ class Grass:
 
 		self.surface = pygame.Surface((6, self.height), pygame.SRCALPHA) #TODO: make the height of the surface dynamically change with the height of the grass
 
+		self.rect = self.surface.get_rect(center=self.pos)
+
 		self.mask = pygame.mask.from_surface(self.surface)
 
 		self.calc_blit_pos()
@@ -43,6 +45,7 @@ class Grass:
 	def update_surface(self): # Draw the line at the bottom center of the surface.
 		x, y = self.surface.get_width() / 2, self.surface.get_height()
 		self.rect = pygame.draw.line(self.surface, self.color, (x, y), (x + self.bend, y - self.height), width = 3)
+		self.rect.center = self.pos
 
 	def remove_self(self):
 		self.parent.grass_list.remove(self)

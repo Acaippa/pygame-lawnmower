@@ -18,7 +18,11 @@ class Mower:
 
 		self.margin = self.dict["margin"] # The margin between the image size and the cutting surface size.
 
+		self.body_width, self.body_length = self.dict["body_width"], self.dict["body_length"]
+
 		self.image = pygame.image.load(self.image_path).convert_alpha()
+
+		self.old_image_size = self.image.get_size()
 
 		self.angle = 0
 
@@ -27,6 +31,9 @@ class Mower:
 		self.size = (200, 200)
 
 		self.image = pygame.transform.scale(self.image, self.size)
+		self.rect = self.image.get_rect(center=self.pos)
+
+		self.image_size_increase = self.image.get_size()[0] / self.old_image_size[0], self.image.get_size()[1] / self.old_image_size[1]
 
 		self.shaking = True
 
@@ -34,7 +41,8 @@ class Mower:
 
 		w, h = self.image.get_size()
 
-		self.cutting_surface = pygame.Surface((w - self.margin, h - self.margin))
+		self.cutting_surface = pygame.Surface(((self.body_width * self.image_size_increase[0] - self.margin), (self.body_width * self.image_size_increase[1]) - self.margin), pygame.SRCALPHA)
+		self.cutting_surface.fill("white")
 		self.cutting_mask = pygame.mask.from_surface(self.cutting_surface)
 
 		self.cutting_rect = self.cutting_surface.get_rect()
@@ -53,7 +61,7 @@ class Mower:
 	def draw(self):
 		self.rotated_image = pygame.transform.rotate(self.image, self.angle)
 		self.rotated_cutting_surface = pygame.transform.rotate(self.cutting_surface, self.angle)
-		self.cutting_mask = pygame.mask.from_surface(self.cutting_surface)
+		self.cutting_mask = pygame.mask.from_surface(self.rotated_cutting_surface)
 
 		self.rect = self.rotated_image.get_rect(center=self.pos)
 		self.cutting_rect = self.rotated_cutting_surface.get_rect(center=self.pos)
@@ -77,10 +85,8 @@ class Mower:
 			self.angle += self.turn_rate * self.delta_time
 
 	def cut_grass(self):
-		# print((self.grass_list[0].pos[0] + self.grass_list[0].parent.parent.pos[0]), (self.grass_list[0].pos[1] + self.grass_list[0].parent.parent.pos[1]))
 		for grass in self.grass_list:
-			offset_x, offset_y = (grass.pos[0] + grass.parent.parent.pos[0]) - self.pos[0], (grass.pos[1] + grass.parent.parent.pos[1]) - self.pos[1]
+			offset_x, offset_y = self.pos[0] - (grass.rect[0] + grass.parent.parent.pos[0]), (self.pos[1] + self.body_length) - (grass.rect[1] + grass.parent.parent.pos[1])
 
 			if self.cutting_mask.overlap(grass.mask, (offset_x, offset_y)) != None:
 				grass.remove_self()
-				print("gay")
