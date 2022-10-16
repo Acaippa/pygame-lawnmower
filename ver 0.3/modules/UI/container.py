@@ -60,54 +60,57 @@ class Container:
 		x_dir, y_dir = 0, 0
 		x, y = 0, 0
 
+		if self.direction == "right":
+			x_dir = 1
+		elif self.direction == "left":
+			x_dir = -1
+		if self.direction == "bottom":
+			y_dir = 1
+		elif self.direction == "top":
+			y_dir = -1
+
+		if self.align == "top":
+			self.y_pos = self.pos[1]
+		elif self.align == "bottom":
+			self.y_pos = self.size[1]
+		elif self.align == "centery":
+			self.y_pos = self.size[1] / 2
+		else:
+			self.y_pos = self.pos[1]
+
+		if self.align == "right":
+			self.x_pos = self.size[0]
+		elif self.align == "left":
+			self.x_pos = self.pos[0]
+		elif self.align == "centerx":
+			self.x_pos = self.pos[0] / 2
+		else:
+			self.x_pos = self.pos[0]
+
+		if self.align == "center":
+			self.x_pos = self.size[0] / 2
+			self.y_pos = self.size[1] / 2
+
 		for item in self.item_list:
-			if item.halt != True:
-				if self.direction == "right":
-					x_dir = 1
-
-				elif self.direction == "left":
-					x_dir = -1
-
-				if self.direction == "bottom":
-					y_dir = 1
-
-				elif self.direction == "top":
-					y_dir = -1
-
-
-				if self.align == "top":
-					self.y_pos = self.pos[1]
-				elif self.align == "bottom":
-					self.y_pos = self.size[1]
-				elif self.align == "centery":
-					self.y_pos = self.size[1] / 2
-				else:
-					self.y_pos = self.pos[1]
-
-				if self.align == "right":
-					self.x_pos = self.size[0]
-				elif self.align == "left":
-					self.x_pos = self.pos[0]
-				elif self.align == "centerx":
-					self.x_pos = self.pos[0] / 2
-				else:
-					self.x_pos = self.pos[0]
-
-				if self.align == "center":
-					self.x_pos = self.size[0] / 2
-					self.y_pos = self.size[1] / 2
+			if item.halt == False:
 
 				try:
 					item.pos = self.x_pos + (x + item.rect.width / 2 - item.image.get_width() / 2) + self.padding, self.y_pos + (y + item.rect.height / 2 - item.image.get_height() / 2) + self.padding # If x and y is larger than 0
 				except Exception as e:
 					item.pos = self.x_pos + (x + self.padding * 2), self.y_pos + (y + self.padding * 2)
 
-				if x > self.size[0]:
-					y += (item.rect.height + self.padding_between)
-					x = - (item.rect.width + self.padding_between)
-
 				x += (item.rect.width + self.padding_between) * x_dir
 				y += (item.rect.height + self.padding_between) * y_dir
+				
+				if x > self.size[0]:
+					y += (item.rect.height + self.padding_between)
+					x = 0
+
+					try:
+						item.pos = self.x_pos + (x + item.rect.width / 2 - item.image.get_width() / 2) + self.padding, self.y_pos + (y + item.rect.height / 2 - item.image.get_height() / 2) + self.padding # If x and y is larger than 0
+					except Exception as e:
+						item.pos = self.x_pos + (x + self.padding * 2), self.y_pos + (y + self.padding * 2)
+
 
 				item.update(self.delta_time)
 

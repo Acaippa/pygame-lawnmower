@@ -56,7 +56,6 @@ class Text:
 		self.display_surface.blit(self.image, self.pos)
 
 	def update_text(self):
-		self.font = pygame.font.Font(self.settings["font_path"] + self.settings["font_name"], self.font_size)
 		self.image = self.font.render(self.text, True, self.color)
 		self.rect = self.image.get_rect()
 		
