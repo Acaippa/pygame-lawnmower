@@ -13,7 +13,7 @@ class ShopMenu:
 
 		self.display_surface = self.parent.surface
 
-		self.surface = pygame.Surface((450, 500))
+		self.surface = pygame.Surface((370, 500))
 
 		self.background_color = kwargs.get("background", "#3f3f3f")
 
@@ -37,7 +37,7 @@ class ShopMenu:
 
 		self.main_container = Container(self, size=self.surface.get_size(), align="centerx", direction="bottom", padding=15)
 
-		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding_between=90)
+		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding_between=10)
 
 		self.mower_button = Button(self, container=self.section_container, text="Mowers", command=self.activate_mower_section)
 		self.bag_button = Button(self, container=self.section_container, text="Bags", command=self.activate_bag_section)
@@ -49,8 +49,8 @@ class ShopMenu:
 		for index, mower in enumerate(self.mowers):
 			self.mower_dict[index] = Mower(self, dict=mower)
 
-			container = Container(self, container=self.mower_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(100, 120))
-			Image(self, container=container, image=mower["image"], size=(100, 100))
+			container = Container(self, container=self.mower_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(110, 130))
+			Image(self, container=container, image=mower["image"], size=(container.size[0] - 10, container.size[1] - 30))
 			Text(self, container=container, text=str(mower["price"]))		
 
 		self.current_mower = self.mower_dict[0]

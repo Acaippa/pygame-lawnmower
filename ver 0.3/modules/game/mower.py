@@ -28,7 +28,7 @@ class Mower:
 
 		self.pos = (20, 20)
 
-		self.size = (200, 200)
+		self.size = (170, 170)
 
 		self.image = pygame.transform.scale(self.image, self.size)
 		self.rect = self.image.get_rect(center=self.pos)
