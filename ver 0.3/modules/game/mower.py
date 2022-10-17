@@ -18,6 +18,8 @@ class Mower:
 
 		self.margin = self.dict["margin"] # The margin between the image size and the cutting surface size.
 
+		self.size = self.dict["size"]
+
 		self.body_width, self.body_length = self.dict["body_width"], self.dict["body_length"]
 
 		self.image = pygame.image.load(self.image_path).convert_alpha()
@@ -28,7 +30,6 @@ class Mower:
 
 		self.pos = (20, 20)
 
-		self.size = (170, 170)
 
 		self.image = pygame.transform.scale(self.image, self.size)
 		self.rect = self.image.get_rect(center=self.pos)

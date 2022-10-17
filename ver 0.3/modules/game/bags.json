@@ -1,0 +1,7 @@
+{
+	"bags" : [
+		{
+			"image" : "images/bags/bag01.png", "body_width" : 8, "body_length" : 13, "price" : 200, "size" : [150, 150]
+		}
+	]
+}
