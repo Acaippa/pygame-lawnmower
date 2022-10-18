@@ -40,21 +40,17 @@ class ShopMenu:
 		self.main_container = Container(self, size=self.surface.get_size(), align="centerx", direction="bottom", padding=15)
 
 		self.section_container = Container(self, container=self.main_container, size=(self.main_container.size[0], 70), align="left", direction="right", padding_between=10)
-
-		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
 		self.mower_button = Button(self, container=self.section_container, text="Mowers", command=self.activate_mower_section)
 		self.bag_button = Button(self, container=self.section_container, text="Bags", command=self.activate_bag_section)
 
-		
-		self.bag_section = Container(self, container=self.main_container, align="left", direction="right")
-		self.mower_button = Button(self, container=self.bag_section, text="Bags")
+		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
+		self.bag_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
 		self.bag_section.halt = True
 
 		self.mower_dict = {}
 		self.bag_dict = {}
 
 		for index, mower in enumerate(self.mowers):
-			print(mower)
 			self.mower_dict[index] = Mower(self, dict=mower)
 
 			container = Container(self, container=self.mower_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(110, 130))
