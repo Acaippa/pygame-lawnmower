@@ -13,7 +13,7 @@ class Bag:
 
 		self.image_path = self.dict["image"]
 
-		self.size = self.dict["size"]
+		self.size = self.mower.size
 
 		self.price = self.dict["price"]
 
@@ -21,7 +21,7 @@ class Bag:
 
 		self.image = pygame.image.load(self.image_path).convert_alpha()
 
-		self.image = pygame.transform.scale(self.image, self.size)
+		self.image = pygame.transform.scale(self.image, self.mower.size)
 
 		self.rect = self.image.get_rect()
 
@@ -39,6 +39,7 @@ class Bag:
 		self.draw()
 
 	def draw(self):
+		self.pos = self.mower.pos
 		self.display_surface.blit(self.rotated_image, self.rect)
 
 	def rotate(self):

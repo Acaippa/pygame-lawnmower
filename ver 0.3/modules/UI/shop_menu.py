@@ -43,32 +43,32 @@ class ShopMenu:
 		self.mower_button = Button(self, container=self.section_container, text="Mowers", command=self.activate_mower_section)
 		self.bag_button = Button(self, container=self.section_container, text="Bags", command=self.activate_bag_section)
 
-		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
-		self.bag_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20)
+		self.mower_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20, halt=True)
+		self.bag_section = Container(self, container=self.main_container, align="left", direction="right", size=(self.main_container.size[0], self.main_container.size[1]-self.section_container.size[1]), padding_between=20, halt=True)
 		self.bag_section.halt = True
 
 		self.mower_dict = {}
 		self.bag_dict = {}
+		self.container_dict = {}
+
+		print(len(self.mowers))
 
 		for index, mower in enumerate(self.mowers):
-			self.mower_dict[index] = Mower(self, dict=mower)
+			self.mower_dict[index] = mower
 
-			container = Container(self, container=self.mower_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(110, 130))
+			container = Container(self, container=self.mower_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(110, 130), command=lambda index = index: self.change_mower(index))
 			Image(self, container=container, image=mower["image"], size=(container.size[0] - 10, container.size[1] - 30))
 			Text(self, container=container, text=str(mower["price"]))
 
 		for index, bag in enumerate(self.bags):
-			self.bag_dict[index] = Bag(self, dict=bag, mower=self.mower_dict[0])
+			self.bag_dict[index] = bag
 
 			container = Container(self, container=self.bag_section, background="#2f2f2f", padding=5, align="left", direction="bottom", size=(110, 130))
 			Image(self, container=container, image=bag["image"], size=(container.size[0] - 10, container.size[1] - 30))
 			Text(self, container=container, text=str(bag["price"]))			
 
-		self.current_mower = self.mower_dict[0]
-		self.current_bag = self.bag_dict[0]
+		self.change_mower(1)
 
-		self.parent.current_mower = self.current_mower
-		self.parent.current_bag = self.current_bag
 
 
 	def update(self, dt):
@@ -80,6 +80,7 @@ class ShopMenu:
 		self.update_items()
 
 		self.current_mower.update(self.delta_time)
+		self.current_bag.update(self.delta_time)
 
 		self.draw()
 
@@ -124,6 +125,14 @@ class ShopMenu:
 	def activate_bag_section(self):
 		self.mower_section.halt = True
 		self.bag_section.halt = False
+
+	def change_mower(self, index):
+		self.current_mower = Mower(self, dict=self.mower_dict[index])
+		self.current_bag = Bag(self, dict=self.bag_dict[0], mower=self.current_mower)
+		self.current_bag.mower = self.current_mower
+
+		self.parent.current_mower = self.current_mower
+		self.parent.current_bag = self.current_bag
 
 
 
