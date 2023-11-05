@@ -15,7 +15,6 @@ Then, install the requirements with `pip install -r requirements.txt`.
 # Showcase
 Here i'll show the the newest version of the game (ver 0.3)
 
-### Main title screen
 <img src="https://github.com/Acaippa/pygame-lawnmower/assets/106773288/9cf76edf-d7f0-4eb1-a0a3-0a93ae5ec836" width="50%">
 
 This is just a normal main game screen, with cheesy main text.
